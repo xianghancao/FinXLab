@@ -1,0 +1,4 @@
+_build/
+编译.ipynb
+.ipynb_checkpoints/
+.DS_Store
