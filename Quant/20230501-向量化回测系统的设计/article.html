@@ -1,0 +1,1068 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>向量化回测系统的设计 &#8212; FinX Lab</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-examples.css?v=e236af4b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/micromodal.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../../_static/tabs.js?v=3ee01567"></script>
+    <script src="../../_static/js/hoverxref.js"></script>
+    <script src="../../_static/js/tooltipster.bundle.min.js"></script>
+    <script src="../../_static/js/micromodal.min.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Quant/20230501-向量化回测系统的设计/article';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Spillover" href="../../Spillover/%E7%9B%AE%E5%BD%95.html" />
+    <link rel="prev" title="Quant" href="../%E7%9B%AE%E5%BD%95.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../home.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/me.jpg" class="logo__image only-light" alt="FinX Lab - Home"/>
+    <script>document.write(`<img src="../../_static/me.jpg" class="logo__image only-dark" alt="FinX Lab - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../home.html">
+                    FinX Lab
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../NLP/%E7%9B%AE%E5%BD%95.html">NLP</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../NLP/%E9%A2%84%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B%E8%BF%9B%E8%A1%8C%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB/article.html">使用 DistilBERT 进行情感分析：基于预训练模型的实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../NLP/%E6%96%87%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%9F%A2%E9%87%8F%E5%8C%96%E4%B8%8EKeras%E4%B8%AD%E7%9A%84Tokenizer%E4%BD%BF%E7%94%A8/article.html">文本数据矢量化与Keras中的Tokenizer使用</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../Networks/%E7%9B%AE%E5%BD%95.html">Networks</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../Networks/20240718-%E7%BD%91%E7%BB%9C%E7%9A%84%E7%9B%B8%E5%85%B3%E6%80%A7%E5%9B%BE%E7%BB%98%E5%88%B6/article.html">网络的相关性图绘制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Networks/20240723-%E5%A6%82%E4%BD%95%E7%BB%98%E5%88%B6%E5%9C%B0%E7%90%86%E5%9B%BE/article.html">如何绘制地理图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Networks/20240721-%E5%9F%BA%E4%BA%8EiGraph%E7%9A%84%E7%BD%91%E7%BB%9C%E5%88%86%E6%9E%90%E5%92%8C%E7%BB%98%E5%9B%BE/article.html">基于iGraph的网络分析和绘图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Networks/20240805-%E5%9F%BA%E4%BA%8ENetworkx%E7%9A%84%E7%BD%91%E7%BB%9C%E5%88%86%E6%9E%90%E5%92%8C%E7%BB%98%E5%9B%BE/article.html">基于Networkx的网络分析和绘图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Networks/%E5%A4%8D%E6%9D%82%E7%BD%91%E7%BB%9C%E7%9A%84%E5%BA%A6%E9%87%8F%E6%8C%87%E6%A0%87/article.html">复杂网络的度量指标</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../%E7%9B%AE%E5%BD%95.html">Quant</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">向量化回测系统的设计</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../Spillover/%E7%9B%AE%E5%BD%95.html">Spillover</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../Spillover/20240410-%E5%9F%BA%E4%BA%8E%E6%96%B9%E5%B7%AE%E5%88%86%E8%A7%A3%E7%9A%84%E6%B3%A2%E5%8A%A8%E7%8E%87%E6%BA%A2%E5%87%BA%E5%BA%A6%E9%87%8F/article.html">基于方差分解的波动率溢出度量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Spillover/20240620-KPPS%20H%E6%AD%A5%E9%A2%84%E6%B5%8B%E8%AF%AF%E5%B7%AE%E6%96%B9%E5%B7%AE%E5%88%86%E8%A7%A3%E7%9A%84Python%E5%AE%9E%E7%8E%B0/article.html">KPPS H步预测误差方差分解的Python实现</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Spillover/20240717-%E5%87%A0%E7%A7%8D%E6%B3%A2%E5%8A%A8%E7%8E%87%E7%9A%84%E8%AE%A1%E7%AE%97/article.html">几种波动率的计算</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Quant/20230501-向量化回测系统的设计/article.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>向量化回测系统的设计</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1. 资产池</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2. 策略/信号</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.交易规则</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">4.评估</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pnl">4.1 收益率PNL</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">4.2 夏普比率</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">4.3 损失回撤</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">4.4 可视化信号表现</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">5. 向量式回测系统的优缺点</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">优点</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">缺点</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">参考</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><a class="toc-backref" href="#id13" role="doc-backlink">向量化回测系统的设计</a><a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<div class="alert alert-block alert-success">
+Keywords:  Quantitative Investment; Vector Backtesting Framework
+<p>Draft: 2023.5.1 Updated:2024.7.25 Version: 0.0.3</p>
+</div>
+<nav class="contents" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id1" id="id13">向量化回测系统的设计</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id14">1. 资产池</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id15">2. 策略/信号</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id16">3.交易规则</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id17">4.评估</a></p>
+<ul>
+<li><p><a class="reference internal" href="#pnl" id="id18">4.1 收益率PNL</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id19">4.2 夏普比率</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id20">4.3 损失回撤</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id21">4.4 可视化信号表现</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id9" id="id22">5. 向量式回测系统的优缺点</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id10" id="id23">优点</a></p></li>
+<li><p><a class="reference internal" href="#id11" id="id24">缺点</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id12" id="id25">参考</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<p>本节提供了一个实用的向量化回测(Vectorised Backtester)框架，它提供了回测的基本思路，该框架被业界已被普遍证明是有效和可实施的。</p>
+<p><img alt="backtester.png" src="../../_images/backtester.png" /></p>
+<p>回测系统的应该包含两个主要部分：</p>
+<ol class="arabic simple">
+<li><p>要交易的市场和标的物，回测的时间范围，交易频率，交易成本，交易方法，以及对于策略的评估等等。</p></li>
+<li><p>策略，即策略师关于如何交易的代码。</p></li>
+</ol>
+<p>当具体得设计一个回测系统时，可以分成以下几个部分。</p>
+<section id="id2">
+<h2><a class="toc-backref" href="#id14" role="doc-backlink">1. 资产池</a><a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>投资股票池为可以投资的标的证券范围，即我们准备使用哪些股票来进行投资。例如，A50指数作为国内我们在<a class="reference external" href="http://www.sse.com.cn/home/index.shtml">上交所网站</a>上，检索A50指数成分股。</p>
+<blockquote>
+<div><p>上海证券市场规模大、流动性好的最具代表性的50只股票组成样本股，以便综合反映上海证券市场最具市场影响力的一批龙头企业的整体状况。上证50指数自2004年1月2日起正式发布。其目标是建立一个成交活跃、规模较大、主要作为衍生金融工具基础的投资指数。——上交所</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ticker</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;浦发银行&#39;</span><span class="p">:</span><span class="s1">&#39;600000&#39;</span><span class="p">,</span> <span class="s1">&#39;上海机场&#39;</span><span class="p">:</span><span class="s1">&#39;600009&#39;</span><span class="p">,</span> <span class="s1">&#39;民生银行&#39;</span><span class="p">:</span><span class="s1">&#39;600016&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;中国石化&#39;</span><span class="p">:</span><span class="s1">&#39;600028&#39;</span><span class="p">,</span> <span class="s1">&#39;中信证券&#39;</span><span class="p">:</span><span class="s1">&#39;600030&#39;</span><span class="p">,</span> <span class="s1">&#39;三一重工&#39;</span><span class="p">:</span><span class="s1">&#39;600031&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;招商银行&#39;</span><span class="p">:</span><span class="s1">&#39;600036&#39;</span><span class="p">,</span> <span class="s1">&#39;保利地产&#39;</span><span class="p">:</span><span class="s1">&#39;600048&#39;</span><span class="p">,</span> <span class="s1">&#39;中国联通&#39;</span><span class="p">:</span><span class="s1">&#39;600050&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;上汽集团&#39;</span><span class="p">:</span><span class="s1">&#39;600104&#39;</span><span class="p">,</span> <span class="s1">&#39;复星医药&#39;</span><span class="p">:</span><span class="s1">&#39;600196&#39;</span><span class="p">,</span> <span class="s1">&#39;恒瑞医药&#39;</span><span class="p">:</span><span class="s1">&#39;600276&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;万华化学&#39;</span><span class="p">:</span><span class="s1">&#39;600309&#39;</span><span class="p">,</span> <span class="s1">&#39;通威股份&#39;</span><span class="p">:</span><span class="s1">&#39;600438&#39;</span><span class="p">,</span> <span class="s1">&#39;贵州茅台&#39;</span><span class="p">:</span><span class="s1">&#39;600519&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;山东黄金&#39;</span><span class="p">:</span><span class="s1">&#39;600547&#39;</span><span class="p">,</span> <span class="s1">&#39;恒生电子&#39;</span><span class="p">:</span><span class="s1">&#39;600570&#39;</span><span class="p">,</span> <span class="s1">&#39;海螺水泥&#39;</span><span class="p">:</span><span class="s1">&#39;600585&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;用友网络&#39;</span><span class="p">:</span><span class="s1">&#39;600588&#39;</span><span class="p">,</span> <span class="s1">&#39;海尔智家&#39;</span><span class="p">:</span><span class="s1">&#39;600690&#39;</span><span class="p">,</span> <span class="s1">&#39;三安光电&#39;</span><span class="p">:</span><span class="s1">&#39;600703&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;闻泰科技&#39;</span><span class="p">:</span><span class="s1">&#39;600745&#39;</span><span class="p">,</span> <span class="s1">&#39;山西汾酒&#39;</span><span class="p">:</span><span class="s1">&#39;600809&#39;</span><span class="p">,</span> <span class="s1">&#39;海通证券&#39;</span><span class="p">:</span><span class="s1">&#39;600837&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;伊利股份&#39;</span><span class="p">:</span><span class="s1">&#39;600887&#39;</span><span class="p">,</span> <span class="s1">&#39;航发动力&#39;</span><span class="p">:</span><span class="s1">&#39;600893&#39;</span><span class="p">,</span> <span class="s1">&#39;中泰证券&#39;</span><span class="p">:</span><span class="s1">&#39;600918&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;隆基股份&#39;</span><span class="p">:</span><span class="s1">&#39;601012&#39;</span><span class="p">,</span> <span class="s1">&#39;中信建投&#39;</span><span class="p">:</span><span class="s1">&#39;601066&#39;</span><span class="p">,</span> <span class="s1">&#39;中国神华&#39;</span><span class="p">:</span><span class="s1">&#39;601088&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;工业富联&#39;</span><span class="p">:</span><span class="s1">&#39;601138&#39;</span><span class="p">,</span> <span class="s1">&#39;兴业银行&#39;</span><span class="p">:</span><span class="s1">&#39;601166&#39;</span><span class="p">,</span> <span class="s1">&#39;国泰君安&#39;</span><span class="p">:</span><span class="s1">&#39;601211&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;农业银行&#39;</span><span class="p">:</span><span class="s1">&#39;601288&#39;</span><span class="p">,</span> <span class="s1">&#39;中国平安&#39;</span><span class="p">:</span><span class="s1">&#39;601318&#39;</span><span class="p">,</span> <span class="s1">&#39;新华保险&#39;</span><span class="p">:</span><span class="s1">&#39;601336&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;工商银行&#39;</span><span class="p">:</span><span class="s1">&#39;601398&#39;</span><span class="p">,</span> <span class="s1">&#39;中国太保&#39;</span><span class="p">:</span><span class="s1">&#39;601601&#39;</span><span class="p">,</span> <span class="s1">&#39;中国人寿&#39;</span><span class="p">:</span><span class="s1">&#39;601628&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;中国建筑&#39;</span><span class="p">:</span><span class="s1">&#39;601668&#39;</span><span class="p">,</span> <span class="s1">&#39;华泰证券&#39;</span><span class="p">:</span><span class="s1">&#39;601688&#39;</span><span class="p">,</span> <span class="s1">&#39;光大银行&#39;</span><span class="p">:</span><span class="s1">&#39;601818&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;中国石油&#39;</span><span class="p">:</span><span class="s1">&#39;601857&#39;</span><span class="p">,</span> <span class="s1">&#39;中国中免&#39;</span><span class="p">:</span><span class="s1">&#39;601888&#39;</span><span class="p">,</span> <span class="s1">&#39;紫金矿业&#39;</span><span class="p">:</span><span class="s1">&#39;601899&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;中金公司&#39;</span><span class="p">:</span><span class="s1">&#39;601995&#39;</span><span class="p">,</span> <span class="s1">&#39;药明康德&#39;</span><span class="p">:</span><span class="s1">&#39;603259&#39;</span><span class="p">,</span> <span class="s1">&#39;海天味业&#39;</span><span class="p">:</span><span class="s1">&#39;603288&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;韦尔股份&#39;</span><span class="p">:</span><span class="s1">&#39;603501&#39;</span><span class="p">,</span> <span class="s1">&#39;兆易创新&#39;</span><span class="p">:</span><span class="s1">&#39;603986&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>定义完股票池后，我们可以开始收集、整理和截取数据：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tushare</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ticker</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">tushare</span><span class="o">.</span><span class="n">get_k_data</span><span class="p">(</span><span class="n">ticker</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;2000-01-01&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;2020-02-01&#39;</span><span class="p">)</span>  <span class="c1">#获取某个时间段内的深圳指数</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;datasets/A50/</span><span class="si">%s</span><span class="s1">.csv&#39;</span> <span class="o">%</span><span class="k">i</span>)
+</pre></div>
+</div>
+</div>
+</div>
+<p>从tushare API读取的同时，我们将数据存储在’datasets/A50/’路径下。</p>
+<p>原始的股票数据是按照每个股票，这里我们称其为tickers，来单独存放的。为了进行向量式计算，我们将其重新组合成”OpenPrice”, “HighestPrice”, “LowestPrice”, “ClosePrice”, “Volume”这5个2维向量。</p>
+<p><img alt="data_process" src="../../_images/data_process.png" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">ClosePrice</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">OpenPrice</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">HighestPrice</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">LowestPrice</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">Volume</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ticker</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;datasets/A50/</span><span class="si">%s</span><span class="s1">.csv&#39;</span> <span class="o">%</span><span class="k">i</span>, index_col=0)
+    <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span>
+    <span class="n">ClosePrice</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span>
+    <span class="n">OpenPrice</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">]</span>
+    <span class="n">HighestPrice</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;high&#39;</span><span class="p">]</span>
+    <span class="n">LowestPrice</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;low&#39;</span><span class="p">]</span>
+    <span class="n">Volume</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;volume&#39;</span><span class="p">]</span>
+<span class="n">dates</span> <span class="o">=</span> <span class="n">ClosePrice</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ClosePrice</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>浦发银行</th>
+      <th>上海机场</th>
+      <th>民生银行</th>
+      <th>中国石化</th>
+      <th>中信证券</th>
+      <th>三一重工</th>
+      <th>招商银行</th>
+      <th>保利地产</th>
+      <th>中国联通</th>
+      <th>上汽集团</th>
+      <th>...</th>
+      <th>华泰证券</th>
+      <th>光大银行</th>
+      <th>中国石油</th>
+      <th>中国中免</th>
+      <th>紫金矿业</th>
+      <th>中金公司</th>
+      <th>药明康德</th>
+      <th>海天味业</th>
+      <th>韦尔股份</th>
+      <th>兆易创新</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-01-17</th>
+      <td>10.42</td>
+      <td>72.47</td>
+      <td>5.28</td>
+      <td>3.855</td>
+      <td>22.644</td>
+      <td>15.261</td>
+      <td>32.217</td>
+      <td>13.54</td>
+      <td>5.65</td>
+      <td>22.247</td>
+      <td>...</td>
+      <td>18.692</td>
+      <td>3.555</td>
+      <td>5.17</td>
+      <td>86.63</td>
+      <td>4.20</td>
+      <td>NaN</td>
+      <td>56.676</td>
+      <td>51.067</td>
+      <td>129.330</td>
+      <td>127.433</td>
+    </tr>
+    <tr>
+      <th>2020-01-20</th>
+      <td>10.44</td>
+      <td>71.16</td>
+      <td>5.31</td>
+      <td>3.835</td>
+      <td>22.993</td>
+      <td>15.631</td>
+      <td>32.597</td>
+      <td>13.40</td>
+      <td>5.74</td>
+      <td>21.657</td>
+      <td>...</td>
+      <td>18.882</td>
+      <td>3.575</td>
+      <td>5.18</td>
+      <td>83.68</td>
+      <td>4.12</td>
+      <td>NaN</td>
+      <td>57.319</td>
+      <td>52.131</td>
+      <td>138.959</td>
+      <td>139.162</td>
+    </tr>
+    <tr>
+      <th>2020-01-21</th>
+      <td>10.27</td>
+      <td>69.61</td>
+      <td>5.24</td>
+      <td>3.795</td>
+      <td>22.478</td>
+      <td>14.901</td>
+      <td>32.077</td>
+      <td>12.87</td>
+      <td>5.60</td>
+      <td>20.607</td>
+      <td>...</td>
+      <td>18.322</td>
+      <td>3.505</td>
+      <td>5.12</td>
+      <td>80.53</td>
+      <td>3.94</td>
+      <td>NaN</td>
+      <td>57.402</td>
+      <td>52.082</td>
+      <td>135.626</td>
+      <td>136.826</td>
+    </tr>
+    <tr>
+      <th>2020-01-22</th>
+      <td>9.96</td>
+      <td>70.17</td>
+      <td>5.25</td>
+      <td>3.765</td>
+      <td>22.504</td>
+      <td>15.281</td>
+      <td>32.107</td>
+      <td>13.29</td>
+      <td>5.56</td>
+      <td>20.717</td>
+      <td>...</td>
+      <td>18.412</td>
+      <td>3.545</td>
+      <td>5.07</td>
+      <td>81.36</td>
+      <td>4.01</td>
+      <td>NaN</td>
+      <td>57.759</td>
+      <td>51.009</td>
+      <td>137.085</td>
+      <td>146.101</td>
+    </tr>
+    <tr>
+      <th>2020-01-23</th>
+      <td>9.54</td>
+      <td>68.19</td>
+      <td>5.07</td>
+      <td>3.725</td>
+      <td>21.370</td>
+      <td>14.411</td>
+      <td>31.097</td>
+      <td>12.75</td>
+      <td>5.33</td>
+      <td>20.117</td>
+      <td>...</td>
+      <td>17.792</td>
+      <td>3.395</td>
+      <td>4.97</td>
+      <td>78.78</td>
+      <td>3.87</td>
+      <td>NaN</td>
+      <td>55.997</td>
+      <td>49.780</td>
+      <td>136.774</td>
+      <td>142.734</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 50 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id15" role="doc-backlink">2. 策略/信号</a><a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>我们知道在技术分析里，均线交叉策略是一类应用广泛的策略，它的策略想法如下：</p>
+<ul class="simple">
+<li><p>5日的均线称为MA_5</p></li>
+<li><p>10日的均线称为MA_10</p></li>
+<li><p>MA_5上穿MA_10则买入，买入数量为上穿后的幅度</p></li>
+<li><p>MA_5下穿MA_10则卖出，卖出数量为下穿后的幅度</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ma</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
+    <span class="c1"># window 为滑动窗口，即均线计算的窗口长度</span>
+    <span class="k">return</span> <span class="n">price</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">five_ma</span> <span class="o">=</span> <span class="n">ma</span><span class="p">(</span><span class="n">ClosePrice</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>   
+<span class="n">ten_ma</span> <span class="o">=</span> <span class="n">ma</span><span class="p">(</span><span class="n">ClosePrice</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">signal</span><span class="o">=</span> <span class="p">(</span><span class="n">five_ma</span><span class="o">-</span><span class="n">ten_ma</span><span class="p">)</span><span class="o">/</span><span class="n">ten_ma</span>  
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id16" role="doc-backlink">3.交易规则</a><a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>在交易中，使用什么价格进行撮合交易是我们关心的问题，是开盘价、收盘价、还是别的？这里以开盘价为例：</p>
+<a class="reference internal image-reference" href="../../_images/trade_rules.png"><img alt="images/trade_rules.png" src="../../_images/trade_rules.png" style="width: 600px;" /></a>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="k">def</span> <span class="nf">deal</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="n">dates</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">,</span> <span class="n">open_price</span><span class="p">,</span> <span class="n">maxlookback</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                    -----------------------------------------------------------------------------</span>
+<span class="sd">    time                |...|      idx-1      |      idx       |      idx+1       |</span>
+<span class="sd">                    -----------------------------------------------------------------------------</span>
+<span class="sd">                        |   |                 |     dates      |                  |</span>
+<span class="sd">                    -----------------------------------------------------------------------------</span>
+<span class="sd">    signal               |...|     signal     |                |       ...        |</span>
+<span class="sd">                    -----------------------------------------------------------------------------</span>
+<span class="sd">    Openprice trade     |...|                 |   OpenPrice    |     post_open    |</span>
+<span class="sd">                    -----------------------------------------------------------------------------</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># 选择起始日期 - 终止日期</span>
+    <span class="n">start_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dates</span><span class="o">&gt;=</span><span class="n">start_date</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">end_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dates</span><span class="o">&gt;</span><span class="n">end_date</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start_idx</span><span class="o">+</span><span class="n">maxlookback</span><span class="p">,</span> <span class="n">end_idx</span><span class="p">)</span>
+    
+    <span class="c1"># 重新采样dates、signal</span>
+    <span class="n">resample_dates</span> <span class="o">=</span> <span class="n">dates</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="n">resample_signal</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="o">-</span><span class="mi">1</span><span class="p">,:]</span>                                
+
+    <span class="c1"># 对信号进行归一化，变成权重</span>
+    <span class="n">scaled_resample_wgts</span> <span class="o">=</span> <span class="p">(</span><span class="n">resample_signal</span><span class="o">.</span><span class="n">T</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">resample_signal</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-20</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+
+    
+    <span class="c1"># 计算交易价格和收益率</span>
+    <span class="n">open_price</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">open_price</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;ffill&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>   
+    <span class="n">open_price</span> <span class="o">=</span> <span class="n">open_price</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="n">post_open</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">open_price</span><span class="p">)</span>
+    <span class="n">post_open</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">open_price</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">resample_return</span> <span class="o">=</span> <span class="n">post_open</span><span class="o">/</span><span class="n">open_price</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">resample_tradeprice</span> <span class="o">=</span> <span class="n">open_price</span>
+    
+    <span class="k">return</span> <span class="n">resample_return</span><span class="p">,</span> <span class="n">resample_tradeprice</span><span class="p">,</span> <span class="n">scaled_resample_wgts</span><span class="p">,</span> <span class="n">resample_dates</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">resample_return</span><span class="p">,</span> <span class="n">resample_tradeprice</span><span class="p">,</span> <span class="n">scaled_resample_wgts</span><span class="p">,</span> <span class="n">resample_dates</span> <span class="o">=</span> <span class="n">deal</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span>
+                                                                                 <span class="n">dates</span><span class="o">=</span><span class="n">dates</span><span class="p">,</span> 
+                                                                                 <span class="n">start_date</span><span class="o">=</span><span class="s1">&#39;2010-01-01&#39;</span><span class="p">,</span>
+                                                                                 <span class="n">end_date</span> <span class="o">=</span> <span class="s1">&#39;2020-01-01&#39;</span><span class="p">,</span>
+                                                                                 <span class="n">open_price</span><span class="o">=</span><span class="n">OpenPrice</span><span class="p">,</span>
+                                                                                 <span class="n">maxlookback</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id17" role="doc-backlink">4.评估</a><a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<section id="pnl">
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">4.1 收益率PNL</a><a class="headerlink" href="#pnl" title="Link to this heading">#</a></h3>
+<p>计算盈亏PNL(Profit&amp;Loss)情况：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pnl</span> <span class="o">=</span> <span class="n">resample_return</span> <span class="o">*</span> <span class="n">scaled_resample_wgts</span>      <span class="c1"># 盈亏=收益率 * 归一化后的信号权重   </span>
+<span class="n">pnl</span> <span class="o">=</span> <span class="n">pnl</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">cpnl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">pnl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>考虑手续费为万1时的盈亏(PNL)情况:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pre_scaled_resample_wgts</span> <span class="o">=</span> <span class="n">scaled_resample_wgts</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>     <span class="c1">#计算昨日权重</span>
+<span class="n">chg</span> <span class="o">=</span> <span class="n">scaled_resample_wgts</span> <span class="o">-</span> <span class="n">pre_scaled_resample_wgts</span>        <span class="c1">#计算权重变化</span>
+<span class="n">turnover</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">chg</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>        <span class="c1">#换手率 = |权重变化|，nan值变为0，再求和</span>
+<span class="n">avg_turnover</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">turnover</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cost</span> <span class="o">=</span> <span class="mf">0.001</span>           
+<span class="n">net_pnl</span> <span class="o">=</span> <span class="n">pnl</span> <span class="o">-</span> <span class="n">cost</span> <span class="o">*</span> <span class="n">turnover</span>     <span class="c1">#盈亏-手续费*换手率</span>
+<span class="n">net_cpnl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">net_pnl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id6">
+<h3><a class="toc-backref" href="#id19" role="doc-backlink">4.2 夏普比率</a><a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sharpe</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">252</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">net_pnl</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">net_pnl</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id7">
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">4.3 损失回撤</a><a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">drawdown</span><span class="p">(</span><span class="n">cpnl</span><span class="p">):</span>
+    <span class="n">_cpnl</span> <span class="o">=</span> <span class="n">cpnl</span><span class="o">.</span><span class="n">values</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">cpnl</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">cpnl</span><span class="p">)))</span>
+    <span class="n">_cpnl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tril</span><span class="p">(</span><span class="n">_cpnl</span><span class="p">)</span>
+    <span class="n">max_cpnl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">_cpnl</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">cpnl</span> <span class="o">-</span> <span class="n">max_cpnl</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">cpnl</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+
+<span class="n">drawdown</span> <span class="o">=</span> <span class="n">drawdown</span><span class="p">(</span><span class="n">cpnl</span><span class="p">)</span>
+<span class="n">max_drawdown</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">drawdown</span><span class="p">)),</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id8">
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">4.4 可视化信号表现</a><a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">figure</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># 绘制收益率PNL曲线</span>
+<span class="n">pnl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cpnl</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pnl</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">cpnl</span>
+<span class="n">pnl_line</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">pnl</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;pnl&#39;</span><span class="p">)</span>
+
+<span class="n">net_pnl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">net_cpnl</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">net_pnl</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">net_cpnl</span>
+<span class="n">net_pnl_line</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">net_pnl</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;net_pnl&#39;</span><span class="p">)</span>
+
+<span class="n">dates</span> <span class="o">=</span> <span class="n">resample_dates</span>
+<span class="n">step</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dates</span><span class="p">)</span><span class="o">/</span><span class="mi">20</span>
+<span class="n">space</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dates</span><span class="p">))</span> <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="k">step</span>==0]
+<span class="n">dates_str</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dates</span><span class="p">[</span><span class="n">space</span><span class="p">]]</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">dates_str</span><span class="p">))</span> <span class="o">&lt;=</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dates</span><span class="p">)</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">space</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dates</span><span class="p">))</span> <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="k">step</span>==0]
+    <span class="n">dates_str</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dates</span><span class="p">[</span><span class="n">space</span><span class="p">]]</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;PNL&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="n">dates_str</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Signal Perfomance&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="c1"># 绘制回撤曲线</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">drawdown</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">drawdown</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="n">dates_str</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Drawdown&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/75735db17d71872f91fc0de7f4221ed8649c8ac3518c3eacb3d58fddeab03c87.png" src="../../_images/75735db17d71872f91fc0de7f4221ed8649c8ac3518c3eacb3d58fddeab03c87.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">net_pnl</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.        , -0.15447166, -0.11542349, ...,         nan,
+               nan,         nan])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="id9">
+<h2><a class="toc-backref" href="#id22" role="doc-backlink">5. 向量式回测系统的优缺点</a><a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<section id="id10">
+<h3><a class="toc-backref" href="#id23" role="doc-backlink">优点</a><a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>快速： 向量化回测系统实现回测的速度非常快，1000多只股票和1000多个时间戳的回测可以在1秒内完成。这种高效的框架有利于策略师在短时间内开发和分析交易理念。</p></li>
+<li><p>矩阵计算友好： 向量化回测系统允许在策略产生和性能统计期间进行矩阵计算。相比之下，事件驱动的回测器在序列中隔离市场数据，给阵列计算带来困难。</p></li>
+<li><p>从信号处理角度看待策略：向量化回测系统使用框架式数据或面板式数据，帮助策略师从信号处理的角度来考虑数据。特别是，一些操作，如随着时间的推移增强或减弱信号，如果使用向量化回测系统就会变得很方便。</p></li>
+</ul>
+</section>
+<section id="id11">
+<h3><a class="toc-backref" href="#id24" role="doc-backlink">缺点</a><a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>当未来的数据被意外地包括在模拟中的某个点上，而该数据实际上是不可用的，那么回测系统就会被引入前瞻性偏差（Look-ahead bias）。而当策略师在代码中操作向量时，超前指数N+k，即超出当前N，将带来前瞻偏差。这导致了一些不容易察觉的问题。</p></li>
+<li><p>订单类型问题是向量化回测器的另一个缺点。市场订单和限价订单是常见的订单类型。而向量式回测器只模拟TWAP或VWAP的交易，这些都是之前估计的交易价格。</p></li>
+</ol>
+</section>
+</section>
+<section id="id12">
+<h2><a class="toc-backref" href="#id25" role="doc-backlink">参考</a><a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Michael L. Halls-Moore, Strategies Optimisation, <em>Successful Algorithm Trading</em> , Chapter 3</p></li>
+<li><p>《高效的无效》Efficiently Inefficient, Lasse Heje Pedersen, 2021</p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Quant/20230501-向量化回测系统的设计"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../%E7%9B%AE%E5%BD%95.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Quant</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../Spillover/%E7%9B%AE%E5%BD%95.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Spillover</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1. 资产池</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2. 策略/信号</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.交易规则</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">4.评估</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pnl">4.1 收益率PNL</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">4.2 夏普比率</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">4.3 损失回撤</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">4.4 可视化信号表现</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">5. 向量式回测系统的优缺点</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">优点</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">缺点</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">参考</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By FinX Lab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

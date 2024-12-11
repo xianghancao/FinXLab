@@ -1,0 +1,705 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>网络的相关性图绘制 &#8212; FinX Lab</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-examples.css?v=e236af4b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/micromodal.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../../_static/tabs.js?v=3ee01567"></script>
+    <script src="../../_static/js/hoverxref.js"></script>
+    <script src="../../_static/js/tooltipster.bundle.min.js"></script>
+    <script src="../../_static/js/micromodal.min.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Networks/20240718-网络的相关性图绘制/article';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="如何绘制地理图" href="../20240723-%E5%A6%82%E4%BD%95%E7%BB%98%E5%88%B6%E5%9C%B0%E7%90%86%E5%9B%BE/article.html" />
+    <link rel="prev" title="Networks" href="../%E7%9B%AE%E5%BD%95.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../home.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/me.jpg" class="logo__image only-light" alt="FinX Lab - Home"/>
+    <script>document.write(`<img src="../../_static/me.jpg" class="logo__image only-dark" alt="FinX Lab - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../home.html">
+                    FinX Lab
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../NLP/%E7%9B%AE%E5%BD%95.html">NLP</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../NLP/%E9%A2%84%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B%E8%BF%9B%E8%A1%8C%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB/article.html">使用 DistilBERT 进行情感分析：基于预训练模型的实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../NLP/%E6%96%87%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%9F%A2%E9%87%8F%E5%8C%96%E4%B8%8EKeras%E4%B8%AD%E7%9A%84Tokenizer%E4%BD%BF%E7%94%A8/article.html">文本数据矢量化与Keras中的Tokenizer使用</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../%E7%9B%AE%E5%BD%95.html">Networks</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">网络的相关性图绘制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../20240723-%E5%A6%82%E4%BD%95%E7%BB%98%E5%88%B6%E5%9C%B0%E7%90%86%E5%9B%BE/article.html">如何绘制地理图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../20240721-%E5%9F%BA%E4%BA%8EiGraph%E7%9A%84%E7%BD%91%E7%BB%9C%E5%88%86%E6%9E%90%E5%92%8C%E7%BB%98%E5%9B%BE/article.html">基于iGraph的网络分析和绘图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../20240805-%E5%9F%BA%E4%BA%8ENetworkx%E7%9A%84%E7%BD%91%E7%BB%9C%E5%88%86%E6%9E%90%E5%92%8C%E7%BB%98%E5%9B%BE/article.html">基于Networkx的网络分析和绘图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../%E5%A4%8D%E6%9D%82%E7%BD%91%E7%BB%9C%E7%9A%84%E5%BA%A6%E9%87%8F%E6%8C%87%E6%A0%87/article.html">复杂网络的度量指标</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../Quant/%E7%9B%AE%E5%BD%95.html">Quant</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../Quant/20230501-%E5%90%91%E9%87%8F%E5%8C%96%E5%9B%9E%E6%B5%8B%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E8%AE%A1/article.html">向量化回测系统的设计</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../Spillover/%E7%9B%AE%E5%BD%95.html">Spillover</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../Spillover/20240410-%E5%9F%BA%E4%BA%8E%E6%96%B9%E5%B7%AE%E5%88%86%E8%A7%A3%E7%9A%84%E6%B3%A2%E5%8A%A8%E7%8E%87%E6%BA%A2%E5%87%BA%E5%BA%A6%E9%87%8F/article.html">基于方差分解的波动率溢出度量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Spillover/20240620-KPPS%20H%E6%AD%A5%E9%A2%84%E6%B5%8B%E8%AF%AF%E5%B7%AE%E6%96%B9%E5%B7%AE%E5%88%86%E8%A7%A3%E7%9A%84Python%E5%AE%9E%E7%8E%B0/article.html">KPPS H步预测误差方差分解的Python实现</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Spillover/20240717-%E5%87%A0%E7%A7%8D%E6%B3%A2%E5%8A%A8%E7%8E%87%E7%9A%84%E8%AE%A1%E7%AE%97/article.html">几种波动率的计算</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Networks/20240718-网络的相关性图绘制/article.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>网络的相关性图绘制</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>网络的相关性图绘制<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>Jul 18, 2024</p>
+<p>环形图（Circular graphs）是一种网络图，其中节点在视觉上排列成圆形布局。
+在复杂网络学科中，经常会使用环形图表示网络中节点的相关性。</p>
+<p><img alt="网络的相关性图绘制" src="../../_images/network_corr_plot.png" /></p>
+<p>图1 全球股票市场的指数之间在三个时刻（危机前、中、后）的关联性。</p>
+<p>如何绘制环形图，在python中可以使用networkx等工具绘制。</p>
+<p>但是有时候，为了更灵活的掌控绘图结果，更好的适配数据，最好还是自己来编程绘图。下面是使用matplotlib来绘图绘制网络的相关性图：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">igraph</span> <span class="k">as</span> <span class="nn">ig</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">scienceplots</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;science&#39;</span><span class="p">)</span>
+
+<span class="c1"># plt.rcParams.update({</span>
+<span class="c1">#     &quot;text.usetex&quot;: True,</span>
+<span class="c1">#     &quot;font.family&quot;: &quot;Helvetica&quot;,</span>
+<span class="c1">#     &quot;font.size&quot;:10</span>
+<span class="c1"># })</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">__version__</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;3.7.1&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sin</span><span class="p">(</span><span class="n">degree</span><span class="p">):</span>
+    <span class="c1"># degree=30, return 1/2</span>
+    <span class="c1"># degree=90, return 1</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">degree</span><span class="o">/</span><span class="mi">90</span><span class="o">*</span><span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">circle</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">vertex</span><span class="p">):</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">center</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">vertex</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">radius</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">+</span><span class="n">x</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">radius</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">+</span><span class="n">y</span>
+    <span class="k">return</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NetworkPlot</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">figure</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">ncols</span><span class="o">=</span><span class="n">ncols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+    
+    
+    
+    <span class="k">def</span> <span class="nf">plot_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adj_matrix</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">legend_label</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1">## 参数===========================</span>
+        <span class="c1"># plot</span>
+        <span class="n">figsize</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;plot&#39;</span><span class="p">][</span><span class="s1">&#39;figsize&#39;</span><span class="p">]</span>
+
+
+        <span class="c1"># circle</span>
+        <span class="n">circle_radius</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;circle&#39;</span><span class="p">][</span><span class="s1">&#39;circle_radius&#39;</span><span class="p">]</span>
+        <span class="n">circle_center</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;circle&#39;</span><span class="p">][</span><span class="s1">&#39;circle_center&#39;</span><span class="p">]</span>
+        <span class="n">angle</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;circle&#39;</span><span class="p">][</span><span class="s1">&#39;angle&#39;</span><span class="p">]</span>
+
+
+
+        <span class="c1">## 绘图===========================</span>
+        <span class="c1"># plot big circle</span>
+        <span class="n">vertex_x</span><span class="p">,</span> <span class="n">vertex_y</span> <span class="o">=</span> <span class="n">circle</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;circle&#39;</span><span class="p">][</span><span class="s1">&#39;circle_center&#39;</span><span class="p">],</span>
+                      <span class="n">radius</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;circle&#39;</span><span class="p">][</span><span class="s1">&#39;circle_radius&#39;</span><span class="p">],</span> 
+                      <span class="n">vertex</span><span class="o">=</span><span class="n">adj_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        
+
+        <span class="c1"># plot vertices circle</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">adj_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="o">=</span> <span class="n">circle</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="n">vertex_x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">vertex_y</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>
+                  <span class="n">radius</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;vertex&#39;</span><span class="p">][</span><span class="s1">&#39;vertex_radius&#39;</span><span class="p">],</span>
+                  <span class="n">vertex</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+            <span class="n">axes</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;vertex&#39;</span><span class="p">][</span><span class="s1">&#39;vertex_color&#39;</span><span class="p">])</span>
+
+        <span class="c1"># add vertex_labels</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">adj_matrix</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">vertex_x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                <span class="n">props</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ha&#39;</span><span class="p">:</span> <span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;va&#39;</span><span class="p">:</span> <span class="s1">&#39;center&#39;</span><span class="p">}</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">props</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ha&#39;</span><span class="p">:</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;va&#39;</span><span class="p">:</span> <span class="s1">&#39;center&#39;</span><span class="p">}</span>
+
+            <span class="n">axes</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">vertex_x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="mf">2.</span><span class="o">*</span><span class="p">(</span><span class="n">vertex_x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="nb">abs</span><span class="p">(</span><span class="n">vertex_x</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="o">*</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;vertex&#39;</span><span class="p">][</span><span class="s1">&#39;vertex_radius&#39;</span><span class="p">],</span>
+                          <span class="n">vertex_y</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                          <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span><span class="k">label</span>, 
+                          <span class="n">props</span><span class="p">,</span>
+                          <span class="n">fontsize</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;vertex&#39;</span><span class="p">][</span><span class="s1">&#39;vertex_label_fontsize&#39;</span><span class="p">],</span>
+                          <span class="n">rotation</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;vertex&#39;</span><span class="p">][</span><span class="s1">&#39;vertex_label_angle&#39;</span><span class="p">],</span>
+                          <span class="n">rotation_mode</span><span class="o">=</span><span class="s1">&#39;anchor&#39;</span><span class="p">)</span>
+
+        <span class="c1"># add edges</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">adj_matrix</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">adj_matrix</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">adj_matrix</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="n">l1</span><span class="p">,</span> <span class="o">=</span><span class="n">axes</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">vertex_x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">vertex_x</span><span class="p">[</span><span class="n">j</span><span class="p">]],[</span><span class="n">vertex_y</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">vertex_y</span><span class="p">[</span><span class="n">j</span><span class="p">]],</span>
+                             <span class="n">color</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;edge&#39;</span><span class="p">][</span><span class="s1">&#39;edge_color&#39;</span><span class="p">],</span>
+                             <span class="n">linewidth</span><span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="c1">#adj_matrix.loc[x, y],</span>
+                             <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="c1">#config[&#39;edge&#39;][&#39;edge_style&#39;],</span>
+                            <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+
+                <span class="k">elif</span> <span class="n">adj_matrix</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
+                    <span class="n">l2</span><span class="p">,</span> <span class="o">=</span><span class="n">axes</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">vertex_x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">vertex_x</span><span class="p">[</span><span class="n">j</span><span class="p">]],[</span><span class="n">vertex_y</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">vertex_y</span><span class="p">[</span><span class="n">j</span><span class="p">]],</span>
+                             <span class="n">color</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;edge&#39;</span><span class="p">][</span><span class="s1">&#39;edge_color&#39;</span><span class="p">],</span>
+                             <span class="n">linewidth</span><span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="c1">#adj_matrix.loc[x, y],</span>
+                             <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="c1">#config[&#39;edge&#39;][&#39;edge_style&#39;],</span>
+                            <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+                    
+        <span class="c1"># render figure</span>
+        <span class="c1">#axes.set_aspect(1)</span>
+        <span class="c1"># axis</span>
+        <span class="n">axes</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+        <span class="n">axes</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="o">-</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+        <span class="n">axes</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+        <span class="c1">#if title is not None:</span>
+        <span class="c1">#    axes.set_title()</span>
+        <span class="k">if</span> <span class="n">legend_label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">axes</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower center&#39;</span><span class="p">,</span>
+                        <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                        <span class="n">handles</span><span class="o">=</span><span class="p">[</span><span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">],</span> 
+                        <span class="n">labels</span><span class="o">=</span><span class="n">legend_label</span><span class="p">,</span> 
+                        <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+                       <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>
+                       <span class="n">shadow</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                       <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        
+    <span class="k">def</span> <span class="nf">savefig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;plot&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;figsize&#39;</span><span class="p">:(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">),</span>
+                  <span class="p">},</span>
+          <span class="s1">&#39;circle&#39;</span><span class="p">:{</span>
+               <span class="s1">&#39;circle_radius&#39;</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span>
+                <span class="s1">&#39;circle_center&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="s1">&#39;angle&#39;</span><span class="p">:</span> <span class="mi">360</span><span class="p">},</span>
+            <span class="s1">&#39;vertex&#39;</span><span class="p">:{</span>
+                <span class="s1">&#39;vertex_radius&#39;</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">,</span>
+                <span class="s1">&#39;vertex_color&#39;</span><span class="p">:</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;vertex_label_angle&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s1">&#39;vertex_label_fontsize&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">},</span>
+            <span class="s1">&#39;edge&#39;</span><span class="p">:{</span>
+                <span class="s1">&#39;edge_color&#39;</span><span class="p">:</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;edge_style&#39;</span><span class="p">:</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="c1">#&#39;-&#39;, &#39;--&#39;, &#39;-.&#39;, &#39;:&#39;</span>
+                <span class="s1">&#39;edge_width&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">}</span>
+         <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># adj_matrix</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">list_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">&#39;datasets/指数数据表.xlsx&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;指数编码&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">str_</span><span class="p">},</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;指数编码&#39;</span><span class="p">)</span>
+<span class="c1">#list_df = list_df[list_df[&#39;select&#39;] == &#39;v&#39;]</span>
+<span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">list_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">str_</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="s1">&#39;S&amp;P500&#39;</span><span class="p">:</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="s1">&#39;S\&amp;P500&#39;</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="n">list_df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">l</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nwp</span> <span class="o">=</span> <span class="n">NetworkPlot</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">date1</span> <span class="o">=</span> <span class="s1">&#39;2007-06-29&#39;</span>
+<span class="n">date2</span> <span class="o">=</span> <span class="s1">&#39;2009-06-25&#39;</span>
+<span class="n">date3</span> <span class="o">=</span> <span class="s1">&#39;2011-06-29&#39;</span>
+    
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">date</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="n">date1</span><span class="p">,</span> <span class="n">date2</span><span class="p">,</span> <span class="n">date3</span><span class="p">]):</span>
+    <span class="n">adj_matrix</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;output/21nodes_200day_p4_q2/adjacent_matrix/</span><span class="si">%s</span><span class="s1">.csv&#39;</span> <span class="o">%</span><span class="k">date</span>, index_col=0)
+    <span class="n">adj_matrix</span> <span class="o">=</span> <span class="n">adj_matrix</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">list_df</span><span class="p">[</span><span class="s1">&#39;指数名称&#39;</span><span class="p">]]</span>
+    <span class="n">adj_matrix</span> <span class="o">=</span> <span class="n">adj_matrix</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">list_df</span><span class="p">[</span><span class="s1">&#39;指数名称&#39;</span><span class="p">]]</span>
+    <span class="c1">#adj_matrix.index = [&#39;%s(%s)&#39; %(list_df.index[i], list_df[&#39;国家全称&#39;][i]) for i in range(list_df.shape[0])]</span>
+    <span class="n">adj_matrix</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">list_df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">list_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+    <span class="n">adj_matrix</span><span class="p">[</span><span class="n">adj_matrix</span><span class="o">&lt;</span><span class="mf">0.35</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
+    <span class="n">adj_matrix</span><span class="p">[</span><span class="n">adj_matrix</span><span class="o">&gt;=</span><span class="mf">0.6</span><span class="p">]</span><span class="o">=</span><span class="mi">2</span>
+    <span class="n">adj_matrix</span><span class="p">[(</span><span class="n">adj_matrix</span><span class="o">&gt;=</span><span class="mf">0.35</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">adj_matrix</span><span class="o">&lt;</span><span class="mf">0.6</span><span class="p">)]</span><span class="o">=</span><span class="mi">1</span>
+    <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">legend_label</span><span class="o">=</span><span class="p">[</span><span class="sa">r</span><span class="s1">&#39;$\geq 0.4, &lt; 0.6$&#39;</span><span class="p">,</span>  <span class="sa">r</span><span class="s2">&quot;$\geq 0.6$&quot;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">legend_label</span><span class="o">=</span><span class="kc">None</span>
+    <span class="n">nwp</span><span class="o">.</span><span class="n">plot_network</span><span class="p">(</span><span class="n">adj_matrix</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">nwp</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">date</span><span class="p">,</span> <span class="n">legend_label</span><span class="o">=</span><span class="n">legend_label</span><span class="p">)</span>
+
+<span class="n">nwp</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;images/network_2006_2012.pdf&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/9aab6800d271f636511c7c12cbb6d8fd80f875a66d25e7c173cdf01390125890.png" src="../../_images/9aab6800d271f636511c7c12cbb6d8fd80f875a66d25e7c173cdf01390125890.png" />
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Networks/20240718-网络的相关性图绘制"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../%E7%9B%AE%E5%BD%95.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Networks</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../20240723-%E5%A6%82%E4%BD%95%E7%BB%98%E5%88%B6%E5%9C%B0%E7%90%86%E5%9B%BE/article.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">如何绘制地理图</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By FinX Lab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
