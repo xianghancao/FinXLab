@@ -1,0 +1,1787 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Summarization &#8212; FinX Lab</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-examples.css?v=e236af4b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/micromodal.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../../_static/tabs.js?v=3ee01567"></script>
+    <script src="../../_static/js/hoverxref.js"></script>
+    <script src="../../_static/js/tooltipster.bundle.min.js"></script>
+    <script src="../../_static/js/micromodal.min.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'NLP/词嵌入/06_summarization';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../Home/home.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/me.jpg" class="logo__image only-light" alt="FinX Lab - Home"/>
+    <script>document.write(`<img src="../../_static/me.jpg" class="logo__image only-dark" alt="FinX Lab - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../Home/home.html">
+                    FinX Lab
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../AboutMe/%E7%9B%AE%E5%BD%95.html">About Me</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../AboutMe/Events/article.html">Events</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../%E7%9B%AE%E5%BD%95.html">NLP</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../241128-%E9%A2%84%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B%E8%BF%9B%E8%A1%8C%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB/article.html">使用 DistilBERT 进行情感分析：基于预训练模型的实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../241130-%E6%96%87%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%9F%A2%E9%87%8F%E5%8C%96%E4%B8%8EKeras%E4%B8%AD%E7%9A%84Tokenizer%E4%BD%BF%E7%94%A8/article.html">文本数据矢量化与Keras中的Tokenizer使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../241224-Word-metric%20method%20VS%20Semantic%20measure/article.html">Word-metric methods VS Semantic Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../FinancialEconomics/%E7%9B%AE%E5%BD%95.html">Financial Economics</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../FinancialEconomics/240410-KPPS%20H-Step-Ahead%20Forecast%20Error%20Variance%20Decomposition/article.html">KPPS H-Step-Ahead Forecast Error Variance Decomposition(FEVD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../FinancialEconomics/240620-KPPS%20H%E6%AD%A5%E9%A2%84%E6%B5%8B%E8%AF%AF%E5%B7%AE%E6%96%B9%E5%B7%AE%E5%88%86%E8%A7%A3%E7%9A%84Python%E5%AE%9E%E7%8E%B0/article.html">KPPS H步预测误差方差分解的Python实现</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../FinancialEconomics/240717-%E5%87%A0%E7%A7%8D%E6%B3%A2%E5%8A%A8%E7%8E%87%E7%9A%84%E8%AE%A1%E7%AE%97/article.html">几种波动率的计算</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../FinancialEconomics/230501-DY%20method/article.html">Diebold&amp;Yilmaz method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../FinancialEconomics/230501-DCC-GARCH%E7%9A%84R%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/article.html">DCC-GARCH的R语言实现</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../Networks/%E7%9B%AE%E5%BD%95.html">Networks</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../Networks/240718-%E7%BD%91%E7%BB%9C%E7%9A%84%E7%9B%B8%E5%85%B3%E6%80%A7%E5%9B%BE%E7%BB%98%E5%88%B6/article.html">网络的相关性图绘制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Networks/240721-%E5%9F%BA%E4%BA%8EiGraph%E7%9A%84%E7%BD%91%E7%BB%9C%E5%88%86%E6%9E%90%E5%92%8C%E7%BB%98%E5%9B%BE/article.html">基于iGraph的网络分析和绘图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Networks/240723-%E5%A6%82%E4%BD%95%E7%BB%98%E5%88%B6%E5%9C%B0%E7%90%86%E5%9B%BE/article.html">如何绘制地理图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Networks/240805-%E5%9F%BA%E4%BA%8ENetworkx%E7%9A%84%E7%BD%91%E7%BB%9C%E5%88%86%E6%9E%90%E5%92%8C%E7%BB%98%E5%9B%BE/article.html">基于Networkx的网络分析和绘图</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../Quant/%E7%9B%AE%E5%BD%95.html">Quant</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../Quant/230501-%E5%90%91%E9%87%8F%E5%8C%96%E5%9B%9E%E6%B5%8B%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E8%AE%A1/article.html">向量化回测系统的设计</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/NLP/词嵌入/06_summarization.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Summarization</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-cnn-dailymail-dataset">The CNN/DailyMail Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#text-summarization-pipelines">Text Summarization Pipelines</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summarization-baseline">Summarization Baseline</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gpt-2">GPT-2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t5">T5</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bart">BART</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pegasus">PEGASUS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-different-summaries">Comparing Different Summaries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measuring-the-quality-of-generated-text">Measuring the Quality of Generated Text</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bleu">BLEU</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rouge">ROUGE</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-pegasus-on-the-cnn-dailymail-dataset">Evaluating PEGASUS on the CNN/DailyMail Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-a-summarization-model">Training a Summarization Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-pegasus-on-samsum">Evaluating PEGASUS on SAMSum</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-tuning-pegasus">Fine-Tuning PEGASUS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-dialogue-summaries">Generating Dialogue Summaries</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Uncomment and run this cell if you&#39;re on Colab or Kaggle</span>
+<span class="c1"># !git clone https://github.com/nlp-with-transformers/notebooks.git</span>
+<span class="c1"># %cd notebooks</span>
+<span class="c1"># from install import *</span>
+<span class="c1"># install_requirements(is_chapter6=True)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#hide</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">setup_chapter</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using transformers v4.12.0.dev0
+Using datasets v1.12.1
+Using accelerate v0.5.1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">pipeline</span><span class="p">,</span> <span class="n">set_seed</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2021-10-26 08:42:19.435660: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libcudart.so.11.0&#39;; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
+2021-10-26 08:42:19.435693: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="summarization">
+<h1>Summarization<a class="headerlink" href="#summarization" title="Link to this heading">#</a></h1>
+<section id="the-cnn-dailymail-dataset">
+<h2>The CNN/DailyMail Dataset<a class="headerlink" href="#the-cnn-dailymail-dataset" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#hide_output</span>
+<span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;cnn_dailymail&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.0.0&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Features: </span><span class="si">{</span><span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">column_names</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "437ab47eb9f7412680333b25ff8276b3", "version_major": 2, "version_minor": 0}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Split lengths: [275349, 12148, 10397]
+Features: [&#39;article&#39;, &#39;highlights&#39;, &#39;id&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Article (excerpt of 500 characters, total length: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;article&quot;</span><span class="p">])</span><span class="si">}</span><span class="s2">):</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;article&quot;</span><span class="p">][:</span><span class="mi">500</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Summary (length: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;highlights&quot;</span><span class="p">])</span><span class="si">}</span><span class="s1">):&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;highlights&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Article (excerpt of 500 characters, total length: 3192):
+
+(CNN) -- Usain Bolt rounded off the world championships Sunday by claiming his
+third gold in Moscow as he anchored Jamaica to victory in the men&#39;s 4x100m
+relay. The fastest man in the world charged clear of United States rival Justin
+Gatlin as the Jamaican quartet of Nesta Carter, Kemar Bailey-Cole, Nickel
+Ashmeade and Bolt won in 37.36 seconds. The U.S finished second in 37.56 seconds
+with Canada taking the bronze after Britain were disqualified for a faulty
+handover. The 26-year-old Bolt has n
+
+Summary (length: 180):
+Usain Bolt wins third gold of world championship .
+Anchors Jamaica to 4x100m relay victory .
+Eighth gold at the championships for Bolt .
+Jamaica double up in women&#39;s 4x100m relay .
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="text-summarization-pipelines">
+<h2>Text Summarization Pipelines<a class="headerlink" href="#text-summarization-pipelines" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sample_text</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;article&quot;</span><span class="p">][:</span><span class="mi">2000</span><span class="p">]</span>
+<span class="c1"># We&#39;ll collect the generated summaries of each model in a dictionary</span>
+<span class="n">summaries</span> <span class="o">=</span> <span class="p">{}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#hide_output</span>
+<span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">sent_tokenize</span>
+
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;punkt&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[nltk_data] Downloading package punkt to /home/leandro/nltk_data...
+[nltk_data]   Package punkt is already up-to-date!
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;The U.S. are a country. The U.N. is an organization.&quot;</span>
+<span class="n">sent_tokenize</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;The U.S. are a country.&#39;, &#39;The U.N. is an organization.&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<section id="summarization-baseline">
+<h3>Summarization Baseline<a class="headerlink" href="#summarization-baseline" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">three_sentence_summary</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sent_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)[:</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">summaries</span><span class="p">[</span><span class="s2">&quot;baseline&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">three_sentence_summary</span><span class="p">(</span><span class="n">sample_text</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="gpt-2">
+<h3>GPT-2<a class="headerlink" href="#gpt-2" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#hide_output</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">pipeline</span><span class="p">,</span> <span class="n">set_seed</span>
+
+<span class="n">set_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">pipe</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="s2">&quot;text-generation&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt2-xl&quot;</span><span class="p">)</span>
+<span class="n">gpt2_query</span> <span class="o">=</span> <span class="n">sample_text</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">TL;DR:</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="n">pipe_out</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span><span class="n">gpt2_query</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">clean_up_tokenization_spaces</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">summaries</span><span class="p">[</span><span class="s2">&quot;gpt2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+    <span class="n">sent_tokenize</span><span class="p">(</span><span class="n">pipe_out</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;generated_text&quot;</span><span class="p">][</span><span class="nb">len</span><span class="p">(</span><span class="n">gpt2_query</span><span class="p">)</span> <span class="p">:]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="t5">
+<h3>T5<a class="headerlink" href="#t5" title="Link to this heading">#</a></h3>
+<a class="reference internal image-reference" href="NLP/词嵌入/images/chapter08_t5.png"><img alt="T5" src="NLP/词嵌入/images/chapter08_t5.png" style="width: 700px;" /></a>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#hide_output</span>
+<span class="n">pipe</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="s2">&quot;summarization&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;t5-large&quot;</span><span class="p">)</span>
+<span class="n">pipe_out</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span><span class="n">sample_text</span><span class="p">)</span>
+<span class="n">summaries</span><span class="p">[</span><span class="s2">&quot;t5&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sent_tokenize</span><span class="p">(</span><span class="n">pipe_out</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;summary_text&quot;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="bart">
+<h3>BART<a class="headerlink" href="#bart" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#hide_output</span>
+<span class="n">pipe</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="s2">&quot;summarization&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;facebook/bart-large-cnn&quot;</span><span class="p">)</span>
+<span class="n">pipe_out</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span><span class="n">sample_text</span><span class="p">)</span>
+<span class="n">summaries</span><span class="p">[</span><span class="s2">&quot;bart&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sent_tokenize</span><span class="p">(</span><span class="n">pipe_out</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;summary_text&quot;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="pegasus">
+<h3>PEGASUS<a class="headerlink" href="#pegasus" title="Link to this heading">#</a></h3>
+<a class="reference internal image-reference" href="NLP/词嵌入/images/chapter08_pegasus.png"><img alt="pegasus" src="NLP/词嵌入/images/chapter08_pegasus.png" style="width: 700px;" /></a>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#hide_output</span>
+<span class="n">pipe</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="s2">&quot;summarization&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;google/pegasus-cnn_dailymail&quot;</span><span class="p">)</span>
+<span class="n">pipe_out</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span><span class="n">sample_text</span><span class="p">)</span>
+<span class="n">summaries</span><span class="p">[</span><span class="s2">&quot;pegasus&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pipe_out</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;summary_text&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; .&lt;n&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="comparing-different-summaries">
+<h2>Comparing Different Summaries<a class="headerlink" href="#comparing-different-summaries" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GROUND TRUTH&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;highlights&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">model_name</span> <span class="ow">in</span> <span class="n">summaries</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">model_name</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">summaries</span><span class="p">[</span><span class="n">model_name</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GROUND TRUTH
+Usain Bolt wins third gold of world championship .
+Anchors Jamaica to 4x100m relay victory .
+Eighth gold at the championships for Bolt .
+Jamaica double up in women&#39;s 4x100m relay .
+
+BASELINE
+(CNN) -- Usain Bolt rounded off the world championships Sunday by claiming his
+third gold in Moscow as he anchored Jamaica to victory in the men&#39;s 4x100m
+relay.
+The fastest man in the world charged clear of United States rival Justin Gatlin
+as the Jamaican quartet of Nesta Carter, Kemar Bailey-Cole, Nickel Ashmeade and
+Bolt won in 37.36 seconds.
+The U.S finished second in 37.56 seconds with Canada taking the bronze after
+Britain were disqualified for a faulty handover.
+
+GPT2
+Nesta, the fastest man in the world.
+Gatlin, the most successful Olympian ever.
+Kemar, a Jamaican legend.
+Shelly-Ann, the fastest woman ever.
+Bolt, the world&#39;s greatest athlete.
+The team sport of pole vaulting
+
+T5
+usain bolt wins his third gold medal of the world championships in the men&#39;s
+4x100m relay .
+the 26-year-old anchored Jamaica to victory in the event in the Russian capital
+.
+he has now collected eight gold medals at the championships, equaling the record
+.
+
+BART
+Usain Bolt wins his third gold of the world championships in Moscow.
+Bolt anchors Jamaica to victory in the men&#39;s 4x100m relay.
+The 26-year-old has now won eight gold medals at world championships.
+Jamaica&#39;s women also win gold in the relay, beating France in the process.
+
+PEGASUS
+Usain Bolt wins third gold of world championships.
+Anchors Jamaica to victory in men&#39;s 4x100m relay.
+Eighth gold at the championships for Bolt.
+Jamaica also win women&#39;s 4x100m relay .
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="measuring-the-quality-of-generated-text">
+<h2>Measuring the Quality of Generated Text<a class="headerlink" href="#measuring-the-quality-of-generated-text" title="Link to this heading">#</a></h2>
+<section id="bleu">
+<h3>BLEU<a class="headerlink" href="#bleu" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide_output</span>
+<span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_metric</span>
+
+<span class="n">bleu_metric</span> <span class="o">=</span> <span class="n">load_metric</span><span class="p">(</span><span class="s2">&quot;sacrebleu&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">bleu_metric</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+    <span class="n">prediction</span><span class="o">=</span><span class="s2">&quot;the the the the the the&quot;</span><span class="p">,</span> <span class="n">reference</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;the cat is on the mat&quot;</span><span class="p">])</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">bleu_metric</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">smooth_method</span><span class="o">=</span><span class="s2">&quot;floor&quot;</span><span class="p">,</span> <span class="n">smooth_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">results</span><span class="p">[</span><span class="s2">&quot;precisions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;precisions&quot;</span><span class="p">]]</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Value&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>score</th>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>counts</th>
+      <td>[2, 0, 0, 0]</td>
+    </tr>
+    <tr>
+      <th>totals</th>
+      <td>[6, 5, 4, 3]</td>
+    </tr>
+    <tr>
+      <th>precisions</th>
+      <td>[33.33, 0.0, 0.0, 0.0]</td>
+    </tr>
+    <tr>
+      <th>bp</th>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>sys_len</th>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>ref_len</th>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bleu_metric</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+    <span class="n">prediction</span><span class="o">=</span><span class="s2">&quot;the cat is on mat&quot;</span><span class="p">,</span> <span class="n">reference</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;the cat is on the mat&quot;</span><span class="p">])</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">bleu_metric</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">smooth_method</span><span class="o">=</span><span class="s2">&quot;floor&quot;</span><span class="p">,</span> <span class="n">smooth_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">results</span><span class="p">[</span><span class="s2">&quot;precisions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;precisions&quot;</span><span class="p">]]</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Value&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>score</th>
+      <td>57.893007</td>
+    </tr>
+    <tr>
+      <th>counts</th>
+      <td>[5, 3, 2, 1]</td>
+    </tr>
+    <tr>
+      <th>totals</th>
+      <td>[5, 4, 3, 2]</td>
+    </tr>
+    <tr>
+      <th>precisions</th>
+      <td>[100.0, 75.0, 66.67, 50.0]</td>
+    </tr>
+    <tr>
+      <th>bp</th>
+      <td>0.818731</td>
+    </tr>
+    <tr>
+      <th>sys_len</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>ref_len</th>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="rouge">
+<h3>ROUGE<a class="headerlink" href="#rouge" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide_output</span>
+<span class="n">rouge_metric</span> <span class="o">=</span> <span class="n">load_metric</span><span class="p">(</span><span class="s2">&quot;rouge&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">reference</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;highlights&quot;</span><span class="p">]</span>
+<span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">rouge_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;rouge1&quot;</span><span class="p">,</span> <span class="s2">&quot;rouge2&quot;</span><span class="p">,</span> <span class="s2">&quot;rougeL&quot;</span><span class="p">,</span> <span class="s2">&quot;rougeLsum&quot;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">model_name</span> <span class="ow">in</span> <span class="n">summaries</span><span class="p">:</span>
+    <span class="n">rouge_metric</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">prediction</span><span class="o">=</span><span class="n">summaries</span><span class="p">[</span><span class="n">model_name</span><span class="p">],</span> <span class="n">reference</span><span class="o">=</span><span class="n">reference</span><span class="p">)</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="n">rouge_metric</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+    <span class="n">rouge_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">rn</span><span class="p">,</span> <span class="n">score</span><span class="p">[</span><span class="n">rn</span><span class="p">]</span><span class="o">.</span><span class="n">mid</span><span class="o">.</span><span class="n">fmeasure</span><span class="p">)</span> <span class="k">for</span> <span class="n">rn</span> <span class="ow">in</span> <span class="n">rouge_names</span><span class="p">)</span>
+    <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rouge_dict</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_records</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">summaries</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rouge1</th>
+      <th>rouge2</th>
+      <th>rougeL</th>
+      <th>rougeLsum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>baseline</th>
+      <td>0.303571</td>
+      <td>0.090909</td>
+      <td>0.214286</td>
+      <td>0.232143</td>
+    </tr>
+    <tr>
+      <th>gpt2</th>
+      <td>0.187500</td>
+      <td>0.000000</td>
+      <td>0.125000</td>
+      <td>0.187500</td>
+    </tr>
+    <tr>
+      <th>t5</th>
+      <td>0.486486</td>
+      <td>0.222222</td>
+      <td>0.378378</td>
+      <td>0.486486</td>
+    </tr>
+    <tr>
+      <th>bart</th>
+      <td>0.582278</td>
+      <td>0.207792</td>
+      <td>0.455696</td>
+      <td>0.506329</td>
+    </tr>
+    <tr>
+      <th>pegasus</th>
+      <td>0.866667</td>
+      <td>0.655172</td>
+      <td>0.800000</td>
+      <td>0.833333</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="evaluating-pegasus-on-the-cnn-dailymail-dataset">
+<h2>Evaluating PEGASUS on the CNN/DailyMail Dataset<a class="headerlink" href="#evaluating-pegasus-on-the-cnn-dailymail-dataset" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide</span>
+<span class="c1"># ignore this cell it is only to be able to start running the notebook here</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span><span class="p">,</span> <span class="n">load_metric</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoModelForSeq2SeqLM</span><span class="p">,</span> <span class="n">AutoTokenizer</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;cnn_dailymail&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s2">&quot;3.0.0&quot;</span><span class="p">)</span>
+<span class="n">rouge_metric</span> <span class="o">=</span> <span class="n">load_metric</span><span class="p">(</span><span class="s2">&quot;rouge&quot;</span><span class="p">,</span> <span class="n">cache_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">rouge_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;rouge1&quot;</span><span class="p">,</span> <span class="s2">&quot;rouge2&quot;</span><span class="p">,</span> <span class="s2">&quot;rougeL&quot;</span><span class="p">,</span> <span class="s2">&quot;rougeLsum&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "da745498cb9f4dd7b7dbdfed92bb61b2", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">evaluate_summaries_baseline</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span>
+                                <span class="n">column_text</span><span class="o">=</span><span class="s2">&quot;article&quot;</span><span class="p">,</span> 
+                                <span class="n">column_summary</span><span class="o">=</span><span class="s2">&quot;highlights&quot;</span><span class="p">):</span>
+    <span class="n">summaries</span> <span class="o">=</span> <span class="p">[</span><span class="n">three_sentence_summary</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">[</span><span class="n">column_text</span><span class="p">]]</span>
+    <span class="n">metric</span><span class="o">.</span><span class="n">add_batch</span><span class="p">(</span><span class="n">predictions</span><span class="o">=</span><span class="n">summaries</span><span class="p">,</span>
+                     <span class="n">references</span><span class="o">=</span><span class="n">dataset</span><span class="p">[</span><span class="n">column_summary</span><span class="p">])</span>    
+    <span class="n">score</span> <span class="o">=</span> <span class="n">metric</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">score</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">test_sampled</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span>
+
+<span class="n">score</span> <span class="o">=</span> <span class="n">evaluate_summaries_baseline</span><span class="p">(</span><span class="n">test_sampled</span><span class="p">,</span> <span class="n">rouge_metric</span><span class="p">)</span>
+<span class="n">rouge_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">rn</span><span class="p">,</span> <span class="n">score</span><span class="p">[</span><span class="n">rn</span><span class="p">]</span><span class="o">.</span><span class="n">mid</span><span class="o">.</span><span class="n">fmeasure</span><span class="p">)</span> <span class="k">for</span> <span class="n">rn</span> <span class="ow">in</span> <span class="n">rouge_names</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">rouge_dict</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;baseline&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rouge1</th>
+      <th>rouge2</th>
+      <th>rougeL</th>
+      <th>rougeLsum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>baseline</th>
+      <td>0.396061</td>
+      <td>0.173995</td>
+      <td>0.245815</td>
+      <td>0.361158</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span>
+
+<span class="k">def</span> <span class="nf">chunks</span><span class="p">(</span><span class="n">list_of_elements</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Yield successive batch-sized chunks from list_of_elements.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_of_elements</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="n">list_of_elements</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">evaluate_summaries_pegasus</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> 
+                               <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> 
+                               <span class="n">column_text</span><span class="o">=</span><span class="s2">&quot;article&quot;</span><span class="p">,</span> 
+                               <span class="n">column_summary</span><span class="o">=</span><span class="s2">&quot;highlights&quot;</span><span class="p">):</span>
+    <span class="n">article_batches</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">chunks</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="n">column_text</span><span class="p">],</span> <span class="n">batch_size</span><span class="p">))</span>
+    <span class="n">target_batches</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">chunks</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="n">column_summary</span><span class="p">],</span> <span class="n">batch_size</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">article_batch</span><span class="p">,</span> <span class="n">target_batch</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span>
+        <span class="nb">zip</span><span class="p">(</span><span class="n">article_batches</span><span class="p">,</span> <span class="n">target_batches</span><span class="p">),</span> <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">article_batches</span><span class="p">)):</span>
+        
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">article_batch</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>  <span class="n">truncation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+                        <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;max_length&quot;</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span>
+        
+        <span class="n">summaries</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">input_ids</span><span class="o">=</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span>
+                         <span class="n">attention_mask</span><span class="o">=</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;attention_mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> 
+                         <span class="n">length_penalty</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">num_beams</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+        
+        <span class="n">decoded_summaries</span> <span class="o">=</span> <span class="p">[</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+                                <span class="n">clean_up_tokenization_spaces</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> 
+               <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">summaries</span><span class="p">]</span>
+        <span class="n">decoded_summaries</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&lt;n&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">decoded_summaries</span><span class="p">]</span>
+        <span class="n">metric</span><span class="o">.</span><span class="n">add_batch</span><span class="p">(</span><span class="n">predictions</span><span class="o">=</span><span class="n">decoded_summaries</span><span class="p">,</span> <span class="n">references</span><span class="o">=</span><span class="n">target_batch</span><span class="p">)</span>
+        
+    <span class="n">score</span> <span class="o">=</span> <span class="n">metric</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">score</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide_output</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoModelForSeq2SeqLM</span><span class="p">,</span> <span class="n">AutoTokenizer</span>
+
+<span class="n">model_ckpt</span> <span class="o">=</span> <span class="s2">&quot;google/pegasus-cnn_dailymail&quot;</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_ckpt</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForSeq2SeqLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_ckpt</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">evaluate_summaries_pegasus</span><span class="p">(</span><span class="n">test_sampled</span><span class="p">,</span> <span class="n">rouge_metric</span><span class="p">,</span> 
+                                   <span class="n">model</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">rouge_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">rn</span><span class="p">,</span> <span class="n">score</span><span class="p">[</span><span class="n">rn</span><span class="p">]</span><span class="o">.</span><span class="n">mid</span><span class="o">.</span><span class="n">fmeasure</span><span class="p">)</span> <span class="k">for</span> <span class="n">rn</span> <span class="ow">in</span> <span class="n">rouge_names</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rouge_dict</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pegasus&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████████████████████████████████████████████████████████████████████| 125/125 [10:39&lt;00:00,  5.11s/it]
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rouge1</th>
+      <th>rouge2</th>
+      <th>rougeL</th>
+      <th>rougeLsum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>pegasus</th>
+      <td>0.434381</td>
+      <td>0.210883</td>
+      <td>0.307195</td>
+      <td>0.373231</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide_input </span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rouge_dict</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pegasus&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rouge1</th>
+      <th>rouge2</th>
+      <th>rougeL</th>
+      <th>rougeLsum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>pegasus</th>
+      <td>0.434381</td>
+      <td>0.210883</td>
+      <td>0.307195</td>
+      <td>0.373231</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="training-a-summarization-model">
+<h2>Training a Summarization Model<a class="headerlink" href="#training-a-summarization-model" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide_output</span>
+<span class="n">dataset_samsum</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;samsum&quot;</span><span class="p">)</span>
+<span class="n">split_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">dataset_samsum</span><span class="p">[</span><span class="n">split</span><span class="p">])</span><span class="k">for</span> <span class="n">split</span> <span class="ow">in</span> <span class="n">dataset_samsum</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Split lengths: </span><span class="si">{</span><span class="n">split_lengths</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Features: </span><span class="si">{</span><span class="n">dataset_samsum</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">column_names</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Dialogue:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dataset_samsum</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;dialogue&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Summary:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dataset_samsum</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;summary&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide_input</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Split lengths: </span><span class="si">{</span><span class="n">split_lengths</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Features: </span><span class="si">{</span><span class="n">dataset_samsum</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">column_names</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Dialogue:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dataset_samsum</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;dialogue&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Summary:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dataset_samsum</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;summary&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Split lengths: [14732, 819, 818]
+Features: [&#39;id&#39;, &#39;dialogue&#39;, &#39;summary&#39;]
+
+Dialogue:
+Hannah: Hey, do you have Betty&#39;s number?
+Amanda: Lemme check
+Hannah: &lt;file_gif&gt;
+Amanda: Sorry, can&#39;t find it.
+Amanda: Ask Larry
+Amanda: He called her last time we were at the park together
+Hannah: I don&#39;t know him well
+Hannah: &lt;file_gif&gt;
+Amanda: Don&#39;t be shy, he&#39;s very nice
+Hannah: If you say so..
+Hannah: I&#39;d rather you texted him
+Amanda: Just text him 🙂
+Hannah: Urgh.. Alright
+Hannah: Bye
+Amanda: Bye bye
+
+Summary:
+Hannah needs Betty&#39;s number but Amanda doesn&#39;t have it. She needs to contact
+Larry.
+</pre></div>
+</div>
+</div>
+</div>
+<section id="evaluating-pegasus-on-samsum">
+<h3>Evaluating PEGASUS on SAMSum<a class="headerlink" href="#evaluating-pegasus-on-samsum" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pipe_out</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">(</span><span class="n">dataset_samsum</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;dialogue&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Summary:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pipe_out</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;summary_text&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; .&lt;n&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Summary:
+Amanda: Ask Larry Amanda: He called her last time we were at the park together.
+Hannah: I&#39;d rather you texted him.
+Amanda: Just text him .
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide_output</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">evaluate_summaries_pegasus</span><span class="p">(</span><span class="n">dataset_samsum</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">],</span> <span class="n">rouge_metric</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span>
+                                   <span class="n">tokenizer</span><span class="p">,</span> <span class="n">column_text</span><span class="o">=</span><span class="s2">&quot;dialogue&quot;</span><span class="p">,</span>
+                                   <span class="n">column_summary</span><span class="o">=</span><span class="s2">&quot;summary&quot;</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">rouge_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">rn</span><span class="p">,</span> <span class="n">score</span><span class="p">[</span><span class="n">rn</span><span class="p">]</span><span class="o">.</span><span class="n">mid</span><span class="o">.</span><span class="n">fmeasure</span><span class="p">)</span> <span class="k">for</span> <span class="n">rn</span> <span class="ow">in</span> <span class="n">rouge_names</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rouge_dict</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pegasus&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████████████████████████████████████████████████████████████████████| 103/103 [07:48&lt;00:00,  4.55s/it]
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rouge1</th>
+      <th>rouge2</th>
+      <th>rougeL</th>
+      <th>rougeLsum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>pegasus</th>
+      <td>0.296168</td>
+      <td>0.087803</td>
+      <td>0.229604</td>
+      <td>0.229514</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide_input</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rouge_dict</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pegasus&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rouge1</th>
+      <th>rouge2</th>
+      <th>rougeL</th>
+      <th>rougeLsum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>pegasus</th>
+      <td>0.296168</td>
+      <td>0.087803</td>
+      <td>0.229604</td>
+      <td>0.229514</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="fine-tuning-pegasus">
+<h3>Fine-Tuning PEGASUS<a class="headerlink" href="#fine-tuning-pegasus" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d_len</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">dataset_samsum</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">][</span><span class="s2">&quot;dialogue&quot;</span><span class="p">]]</span>
+<span class="n">s_len</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">dataset_samsum</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">][</span><span class="s2">&quot;summary&quot;</span><span class="p">]]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">d_len</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C0&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;C0&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Dialogue Token Length&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Length&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">s_len</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C0&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;C0&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Summary Token Length&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Length&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c20cb67d82511f1da4d8843efb43f8b15eb22fce458a58818aeb8cca9052a3eb.svg" src="../../_images/c20cb67d82511f1da4d8843efb43f8b15eb22fce458a58818aeb8cca9052a3eb.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#hide_output</span>
+<span class="k">def</span> <span class="nf">convert_examples_to_features</span><span class="p">(</span><span class="n">example_batch</span><span class="p">):</span>
+    <span class="n">input_encodings</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">example_batch</span><span class="p">[</span><span class="s2">&quot;dialogue&quot;</span><span class="p">],</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+                                <span class="n">truncation</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="k">with</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">as_target_tokenizer</span><span class="p">():</span>
+        <span class="n">target_encodings</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">example_batch</span><span class="p">[</span><span class="s2">&quot;summary&quot;</span><span class="p">],</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
+                                     <span class="n">truncation</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;input_ids&quot;</span><span class="p">:</span> <span class="n">input_encodings</span><span class="p">[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;attention_mask&quot;</span><span class="p">:</span> <span class="n">input_encodings</span><span class="p">[</span><span class="s2">&quot;attention_mask&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="n">target_encodings</span><span class="p">[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">]}</span>
+
+<span class="n">dataset_samsum_pt</span> <span class="o">=</span> <span class="n">dataset_samsum</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">convert_examples_to_features</span><span class="p">,</span> 
+                                       <span class="n">batched</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">,</span> <span class="s2">&quot;labels&quot;</span><span class="p">,</span> <span class="s2">&quot;attention_mask&quot;</span><span class="p">]</span>
+<span class="n">dataset_samsum_pt</span><span class="o">.</span><span class="n">set_format</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;torch&quot;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#hide_input</span>
+
+<span class="c1">#id teacher-forcing</span>
+<span class="c1">#alt Decoder input and label alignemt for text generation.</span>
+<span class="c1">#caption Decoder input and label alignemt for text generation.</span>
+<span class="n">text</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;PAD&#39;</span><span class="p">,</span><span class="s1">&#39;Transformers&#39;</span><span class="p">,</span> <span class="s1">&#39;are&#39;</span><span class="p">,</span> <span class="s1">&#39;awesome&#39;</span><span class="p">,</span> <span class="s1">&#39;for&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;summarization&#39;</span><span class="p">]</span>
+<span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;step&#39;</span><span class="p">:</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;decoder_input&#39;</span><span class="p">:</span> <span class="n">text</span><span class="p">[:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]})</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;step&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>decoder_input</th>
+      <th>label</th>
+    </tr>
+    <tr>
+      <th>step</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>[PAD]</td>
+      <td>Transformers</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>[PAD, Transformers]</td>
+      <td>are</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>[PAD, Transformers, are]</td>
+      <td>awesome</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>[PAD, Transformers, are, awesome]</td>
+      <td>for</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>[PAD, Transformers, are, awesome, for]</td>
+      <td>text</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>[PAD, Transformers, are, awesome, for, text]</td>
+      <td>summarization</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">DataCollatorForSeq2Seq</span>
+
+<span class="n">seq2seq_data_collator</span> <span class="o">=</span> <span class="n">DataCollatorForSeq2Seq</span><span class="p">(</span><span class="n">tokenizer</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">TrainingArguments</span><span class="p">,</span> <span class="n">Trainer</span>
+
+<span class="n">training_args</span> <span class="o">=</span> <span class="n">TrainingArguments</span><span class="p">(</span>
+    <span class="n">output_dir</span><span class="o">=</span><span class="s1">&#39;pegasus-samsum&#39;</span><span class="p">,</span> <span class="n">num_train_epochs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">warmup_steps</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">per_device_train_batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">per_device_eval_batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">logging_steps</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">push_to_hub</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">evaluation_strategy</span><span class="o">=</span><span class="s1">&#39;steps&#39;</span><span class="p">,</span> <span class="n">eval_steps</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">save_steps</span><span class="o">=</span><span class="mf">1e6</span><span class="p">,</span>
+    <span class="n">gradient_accumulation_steps</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#hide_output</span>
+<span class="kn">from</span> <span class="nn">huggingface_hub</span> <span class="kn">import</span> <span class="n">notebook_login</span>
+
+<span class="n">notebook_login</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "04f65c507a094c53a28628b65aad0b0b", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide_output</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">training_args</span><span class="p">,</span>
+                  <span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">,</span> <span class="n">data_collator</span><span class="o">=</span><span class="n">seq2seq_data_collator</span><span class="p">,</span>
+                  <span class="n">train_dataset</span><span class="o">=</span><span class="n">dataset_samsum_pt</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">],</span> 
+                  <span class="n">eval_dataset</span><span class="o">=</span><span class="n">dataset_samsum_pt</span><span class="p">[</span><span class="s2">&quot;validation&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide_output</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">evaluate_summaries_pegasus</span><span class="p">(</span>
+    <span class="n">dataset_samsum</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">],</span> <span class="n">rouge_metric</span><span class="p">,</span> <span class="n">trainer</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column_text</span><span class="o">=</span><span class="s2">&quot;dialogue&quot;</span><span class="p">,</span> <span class="n">column_summary</span><span class="o">=</span><span class="s2">&quot;summary&quot;</span><span class="p">)</span>
+
+<span class="n">rouge_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">rn</span><span class="p">,</span> <span class="n">score</span><span class="p">[</span><span class="n">rn</span><span class="p">]</span><span class="o">.</span><span class="n">mid</span><span class="o">.</span><span class="n">fmeasure</span><span class="p">)</span> <span class="k">for</span> <span class="n">rn</span> <span class="ow">in</span> <span class="n">rouge_names</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rouge_dict</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;pegasus&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide_input</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rouge_dict</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;pegasus&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rouge1</th>
+      <th>rouge2</th>
+      <th>rougeL</th>
+      <th>rougeLsum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>pegasus</th>
+      <td>0.427614</td>
+      <td>0.200571</td>
+      <td>0.340648</td>
+      <td>0.340738</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide_output</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">push_to_hub</span><span class="p">(</span><span class="s2">&quot;Training complete!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saving model checkpoint to pegasus-samsum-test
+Configuration saved in pegasus-samsum-test/config.json
+Model weights saved in pegasus-samsum-test/pytorch_model.bin
+tokenizer config file saved in pegasus-samsum-test/tokenizer_config.json
+Special tokens file saved in pegasus-samsum-test/special_tokens_map.json
+Dropping the following result as it does not have all the necessary field:
+{&#39;task&#39;: {&#39;name&#39;: &#39;Sequence-to-sequence Language Modeling&#39;, &#39;type&#39;: &#39;text2text-generation&#39;}, &#39;dataset&#39;: {&#39;name&#39;: &#39;samsum&#39;, &#39;type&#39;: &#39;samsum&#39;, &#39;args&#39;: &#39;samsum&#39;}}
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;https://huggingface.co/lvwerra/pegasus-samsum-test/commit/236684ab026115ad5b9eb61f6ddbdaf3f07bddf8&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="generating-dialogue-summaries">
+<h3>Generating Dialogue Summaries<a class="headerlink" href="#generating-dialogue-summaries" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide</span>
+<span class="kn">import</span> <span class="nn">transformers</span>
+<span class="n">transformers</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">set_verbosity_error</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gen_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;length_penalty&quot;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span> <span class="s2">&quot;num_beams&quot;</span><span class="p">:</span><span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;max_length&quot;</span><span class="p">:</span> <span class="mi">128</span><span class="p">}</span>
+<span class="n">sample_text</span> <span class="o">=</span> <span class="n">dataset_samsum</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;dialogue&quot;</span><span class="p">]</span>
+<span class="n">reference</span> <span class="o">=</span> <span class="n">dataset_samsum</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;summary&quot;</span><span class="p">]</span>
+<span class="n">pipe</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="s2">&quot;summarization&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;transformersbook/pegasus-samsum&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dialogue:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sample_text</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Reference Summary:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">reference</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Model Summary:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pipe</span><span class="p">(</span><span class="n">sample_text</span><span class="p">,</span> <span class="o">**</span><span class="n">gen_kwargs</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;summary_text&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dialogue:
+Hannah: Hey, do you have Betty&#39;s number?
+Amanda: Lemme check
+Hannah: &lt;file_gif&gt;
+Amanda: Sorry, can&#39;t find it.
+Amanda: Ask Larry
+Amanda: He called her last time we were at the park together
+Hannah: I don&#39;t know him well
+Hannah: &lt;file_gif&gt;
+Amanda: Don&#39;t be shy, he&#39;s very nice
+Hannah: If you say so..
+Hannah: I&#39;d rather you texted him
+Amanda: Just text him 🙂
+Hannah: Urgh.. Alright
+Hannah: Bye
+Amanda: Bye bye
+
+Reference Summary:
+Hannah needs Betty&#39;s number but Amanda doesn&#39;t have it. She needs to contact
+Larry.
+
+Model Summary:
+Amanda can&#39;t find Betty&#39;s number. Larry called Betty last time they were at the
+park together. Hannah wants Amanda to text Larry instead of calling Betty.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">custom_dialogue</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">Thom: Hi guys, have you heard of transformers?</span>
+<span class="s2">Lewis: Yes, I used them recently!</span>
+<span class="s2">Leandro: Indeed, there is a great library by Hugging Face.</span>
+<span class="s2">Thom: I know, I helped build it ;)</span>
+<span class="s2">Lewis: Cool, maybe we should write a book about it. What do you think?</span>
+<span class="s2">Leandro: Great idea, how hard can it be?!</span>
+<span class="s2">Thom: I am in!</span>
+<span class="s2">Lewis: Awesome, let&#39;s do it together!</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pipe</span><span class="p">(</span><span class="n">custom_dialogue</span><span class="p">,</span> <span class="o">**</span><span class="n">gen_kwargs</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;summary_text&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Thom, Lewis and Leandro are going to write a book about transformers. Thom
+helped build a library by Hugging Face. They are going to do it together.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./NLP/词嵌入"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-cnn-dailymail-dataset">The CNN/DailyMail Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#text-summarization-pipelines">Text Summarization Pipelines</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summarization-baseline">Summarization Baseline</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gpt-2">GPT-2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t5">T5</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bart">BART</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pegasus">PEGASUS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-different-summaries">Comparing Different Summaries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measuring-the-quality-of-generated-text">Measuring the Quality of Generated Text</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bleu">BLEU</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rouge">ROUGE</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-pegasus-on-the-cnn-dailymail-dataset">Evaluating PEGASUS on the CNN/DailyMail Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-a-summarization-model">Training a Summarization Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-pegasus-on-samsum">Evaluating PEGASUS on SAMSum</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-tuning-pegasus">Fine-Tuning PEGASUS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-dialogue-summaries">Generating Dialogue Summaries</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By FinX Lab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

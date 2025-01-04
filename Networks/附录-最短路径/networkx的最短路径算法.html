@@ -1,0 +1,1153 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>networkx的最短路径算法 &#8212; FinX Lab</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-examples.css?v=e236af4b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/micromodal.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../../_static/tabs.js?v=3ee01567"></script>
+    <script src="../../_static/js/hoverxref.js"></script>
+    <script src="../../_static/js/tooltipster.bundle.min.js"></script>
+    <script src="../../_static/js/micromodal.min.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Networks/附录-最短路径/networkx的最短路径算法';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../Home/home.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/me.jpg" class="logo__image only-light" alt="FinX Lab - Home"/>
+    <script>document.write(`<img src="../../_static/me.jpg" class="logo__image only-dark" alt="FinX Lab - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../Home/home.html">
+                    FinX Lab
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../AboutMe/%E7%9B%AE%E5%BD%95.html">About Me</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../AboutMe/Events/article.html">Events</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../NLP/%E7%9B%AE%E5%BD%95.html">NLP</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../NLP/241128-%E9%A2%84%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B%E8%BF%9B%E8%A1%8C%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB/article.html">使用 DistilBERT 进行情感分析：基于预训练模型的实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../NLP/241130-%E6%96%87%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%9F%A2%E9%87%8F%E5%8C%96%E4%B8%8EKeras%E4%B8%AD%E7%9A%84Tokenizer%E4%BD%BF%E7%94%A8/article.html">文本数据矢量化与Keras中的Tokenizer使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../NLP/241224-Word-metric%20method%20VS%20Semantic%20measure/article.html">Word-metric methods VS Semantic Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../FinancialEconomics/%E7%9B%AE%E5%BD%95.html">Financial Economics</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../FinancialEconomics/240410-KPPS%20H-Step-Ahead%20Forecast%20Error%20Variance%20Decomposition/article.html">KPPS H-Step-Ahead Forecast Error Variance Decomposition(FEVD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../FinancialEconomics/240620-KPPS%20H%E6%AD%A5%E9%A2%84%E6%B5%8B%E8%AF%AF%E5%B7%AE%E6%96%B9%E5%B7%AE%E5%88%86%E8%A7%A3%E7%9A%84Python%E5%AE%9E%E7%8E%B0/article.html">KPPS H步预测误差方差分解的Python实现</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../FinancialEconomics/240717-%E5%87%A0%E7%A7%8D%E6%B3%A2%E5%8A%A8%E7%8E%87%E7%9A%84%E8%AE%A1%E7%AE%97/article.html">几种波动率的计算</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../FinancialEconomics/230501-DY%20method/article.html">Diebold&amp;Yilmaz method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../FinancialEconomics/230501-DCC-GARCH%E7%9A%84R%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/article.html">DCC-GARCH的R语言实现</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../%E7%9B%AE%E5%BD%95.html">Networks</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../240718-%E7%BD%91%E7%BB%9C%E7%9A%84%E7%9B%B8%E5%85%B3%E6%80%A7%E5%9B%BE%E7%BB%98%E5%88%B6/article.html">网络的相关性图绘制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../240721-%E5%9F%BA%E4%BA%8EiGraph%E7%9A%84%E7%BD%91%E7%BB%9C%E5%88%86%E6%9E%90%E5%92%8C%E7%BB%98%E5%9B%BE/article.html">基于iGraph的网络分析和绘图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../240723-%E5%A6%82%E4%BD%95%E7%BB%98%E5%88%B6%E5%9C%B0%E7%90%86%E5%9B%BE/article.html">如何绘制地理图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../240805-%E5%9F%BA%E4%BA%8ENetworkx%E7%9A%84%E7%BD%91%E7%BB%9C%E5%88%86%E6%9E%90%E5%92%8C%E7%BB%98%E5%9B%BE/article.html">基于Networkx的网络分析和绘图</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../Quant/%E7%9B%AE%E5%BD%95.html">Quant</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../Quant/230501-%E5%90%91%E9%87%8F%E5%8C%96%E5%9B%9E%E6%B5%8B%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E8%AE%A1/article.html">向量化回测系统的设计</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Networks/附录-最短路径/networkx的最短路径算法.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>networkx的最短路径算法</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="networkx">
+<h1>networkx的最短路径算法<a class="headerlink" href="#networkx" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># version 1.0</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">networkx</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">networkx_dijkstra</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="n">networkx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">columns</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">columns</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]):</span>
+                <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">m</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
+    
+    <span class="k">if</span> <span class="n">source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">target</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">nx</span><span class="o">.</span><span class="n">dijkstra_path_length</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
+    
+    <span class="n">p</span> <span class="o">=</span> <span class="n">m</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">columns</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">columns</span><span class="p">)):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">networkx</span><span class="o">.</span><span class="n">dijkstra_path_length</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">target</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            <span class="k">except</span> <span class="n">networkx</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="n">NetworkXNoPath</span><span class="p">:</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">p</span>
+
+
+<span class="k">def</span> <span class="nf">networkx_plot</span><span class="p">(</span><span class="n">G</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.sans-serif&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;SimHei&#39;</span>  <span class="c1"># 设置字体为SimHei</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.unicode_minus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># 解决负号“-”显示异常</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="n">networkx</span><span class="o">.</span><span class="n">shell_layout</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+    <span class="n">networkx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> 
+            <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">node_color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span>
+            <span class="n">edge_color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span>
+           <span class="n">node_size</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span>
+           <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">pylab</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;network&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">pylab</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../5_研究/adjacent_matrix.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span><span class="n">networkx_dijkstra</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+<span class="n">m</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 24/24 [00:00&lt;00:00, 388.70it/s]
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>俄罗斯RTS</th>
+      <th>奥地利ATX</th>
+      <th>道琼斯工业平均</th>
+      <th>标普500</th>
+      <th>台湾加权</th>
+      <th>恒生指数</th>
+      <th>深证成指</th>
+      <th>沪深300</th>
+      <th>富时新加坡海峡时报</th>
+      <th>韩国综合指数</th>
+      <th>...</th>
+      <th>西班牙IBEX35</th>
+      <th>英国富时100</th>
+      <th>比利时BFX</th>
+      <th>上证指数</th>
+      <th>澳大利亚标普200指数</th>
+      <th>纳斯达克</th>
+      <th>墨西哥MXX</th>
+      <th>孟买Sensex30</th>
+      <th>日经225</th>
+      <th>瑞士SMI</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>俄罗斯RTS</th>
+      <td>0.000000</td>
+      <td>1.103883</td>
+      <td>1.662005</td>
+      <td>1.234847</td>
+      <td>1.099842</td>
+      <td>1.031447</td>
+      <td>2.174995</td>
+      <td>2.143527</td>
+      <td>0.987114</td>
+      <td>1.145840</td>
+      <td>...</td>
+      <td>1.223635</td>
+      <td>1.084129</td>
+      <td>0.993365</td>
+      <td>2.097374</td>
+      <td>2.001862</td>
+      <td>1.214805</td>
+      <td>1.164233</td>
+      <td>NaN</td>
+      <td>2.068939</td>
+      <td>1.108556</td>
+    </tr>
+    <tr>
+      <th>奥地利ATX</th>
+      <td>1.103883</td>
+      <td>0.000000</td>
+      <td>1.085186</td>
+      <td>1.130063</td>
+      <td>1.175526</td>
+      <td>1.257159</td>
+      <td>1.071112</td>
+      <td>1.039644</td>
+      <td>1.099950</td>
+      <td>1.877497</td>
+      <td>...</td>
+      <td>0.862859</td>
+      <td>0.670126</td>
+      <td>0.702059</td>
+      <td>0.993491</td>
+      <td>1.172006</td>
+      <td>1.053294</td>
+      <td>1.079309</td>
+      <td>NaN</td>
+      <td>1.248411</td>
+      <td>0.873353</td>
+    </tr>
+    <tr>
+      <th>道琼斯工业平均</th>
+      <td>1.662005</td>
+      <td>1.085186</td>
+      <td>0.000000</td>
+      <td>0.427158</td>
+      <td>2.260712</td>
+      <td>1.853132</td>
+      <td>2.156298</td>
+      <td>2.124830</td>
+      <td>1.832555</td>
+      <td>1.957166</td>
+      <td>...</td>
+      <td>1.061071</td>
+      <td>0.784810</td>
+      <td>0.780991</td>
+      <td>2.027195</td>
+      <td>1.226361</td>
+      <td>0.537505</td>
+      <td>0.742959</td>
+      <td>NaN</td>
+      <td>1.690576</td>
+      <td>0.910693</td>
+    </tr>
+    <tr>
+      <th>标普500</th>
+      <td>1.234847</td>
+      <td>1.130063</td>
+      <td>0.427158</td>
+      <td>0.000000</td>
+      <td>2.305589</td>
+      <td>1.875867</td>
+      <td>2.201175</td>
+      <td>2.120193</td>
+      <td>1.853329</td>
+      <td>1.979900</td>
+      <td>...</td>
+      <td>1.148835</td>
+      <td>0.805584</td>
+      <td>0.837040</td>
+      <td>2.010106</td>
+      <td>1.526637</td>
+      <td>0.338654</td>
+      <td>0.765694</td>
+      <td>NaN</td>
+      <td>1.491725</td>
+      <td>0.931423</td>
+    </tr>
+    <tr>
+      <th>台湾加权</th>
+      <td>1.099842</td>
+      <td>1.175526</td>
+      <td>2.260712</td>
+      <td>2.305589</td>
+      <td>0.000000</td>
+      <td>0.834827</td>
+      <td>1.235003</td>
+      <td>1.232532</td>
+      <td>0.825085</td>
+      <td>0.766062</td>
+      <td>...</td>
+      <td>1.254615</td>
+      <td>1.845652</td>
+      <td>1.877585</td>
+      <td>1.242807</td>
+      <td>1.207964</td>
+      <td>2.228820</td>
+      <td>1.945000</td>
+      <td>NaN</td>
+      <td>1.241174</td>
+      <td>1.983736</td>
+    </tr>
+    <tr>
+      <th>恒生指数</th>
+      <td>1.031447</td>
+      <td>1.257159</td>
+      <td>1.853132</td>
+      <td>1.875867</td>
+      <td>0.834827</td>
+      <td>0.000000</td>
+      <td>1.263465</td>
+      <td>1.264893</td>
+      <td>0.747136</td>
+      <td>0.964109</td>
+      <td>...</td>
+      <td>1.846131</td>
+      <td>1.185807</td>
+      <td>1.700940</td>
+      <td>1.259511</td>
+      <td>0.970415</td>
+      <td>1.833566</td>
+      <td>1.110173</td>
+      <td>NaN</td>
+      <td>1.037492</td>
+      <td>1.752192</td>
+    </tr>
+    <tr>
+      <th>深证成指</th>
+      <td>2.174995</td>
+      <td>1.071112</td>
+      <td>2.156298</td>
+      <td>2.201175</td>
+      <td>1.235003</td>
+      <td>1.263465</td>
+      <td>0.000000</td>
+      <td>0.207567</td>
+      <td>2.010601</td>
+      <td>2.001065</td>
+      <td>...</td>
+      <td>1.933971</td>
+      <td>1.529719</td>
+      <td>1.773171</td>
+      <td>0.287334</td>
+      <td>1.103009</td>
+      <td>2.124406</td>
+      <td>2.150421</td>
+      <td>NaN</td>
+      <td>1.836886</td>
+      <td>1.944465</td>
+    </tr>
+    <tr>
+      <th>沪深300</th>
+      <td>2.143527</td>
+      <td>1.039644</td>
+      <td>2.124830</td>
+      <td>2.120193</td>
+      <td>1.232532</td>
+      <td>1.264893</td>
+      <td>0.207567</td>
+      <td>0.000000</td>
+      <td>2.012029</td>
+      <td>1.998594</td>
+      <td>...</td>
+      <td>1.865438</td>
+      <td>1.352471</td>
+      <td>1.741703</td>
+      <td>0.110086</td>
+      <td>1.159402</td>
+      <td>2.059342</td>
+      <td>2.081550</td>
+      <td>NaN</td>
+      <td>1.893279</td>
+      <td>1.912996</td>
+    </tr>
+    <tr>
+      <th>富时新加坡海峡时报</th>
+      <td>0.987114</td>
+      <td>1.099950</td>
+      <td>1.832555</td>
+      <td>1.853329</td>
+      <td>0.825085</td>
+      <td>0.747136</td>
+      <td>2.010601</td>
+      <td>2.012029</td>
+      <td>0.000000</td>
+      <td>0.777547</td>
+      <td>...</td>
+      <td>1.962809</td>
+      <td>1.047745</td>
+      <td>1.195610</td>
+      <td>2.006647</td>
+      <td>1.126957</td>
+      <td>1.754616</td>
+      <td>1.142890</td>
+      <td>NaN</td>
+      <td>1.101723</td>
+      <td>1.158651</td>
+    </tr>
+    <tr>
+      <th>韩国综合指数</th>
+      <td>1.145840</td>
+      <td>1.877497</td>
+      <td>1.957166</td>
+      <td>1.979900</td>
+      <td>0.766062</td>
+      <td>0.964109</td>
+      <td>2.001065</td>
+      <td>1.998594</td>
+      <td>0.777547</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>2.020678</td>
+      <td>1.825292</td>
+      <td>1.973157</td>
+      <td>2.008870</td>
+      <td>1.133275</td>
+      <td>1.937600</td>
+      <td>1.214206</td>
+      <td>NaN</td>
+      <td>1.096684</td>
+      <td>1.936197</td>
+    </tr>
+    <tr>
+      <th>荷兰AEX</th>
+      <td>1.106671</td>
+      <td>0.826396</td>
+      <td>0.913921</td>
+      <td>0.770282</td>
+      <td>2.001922</td>
+      <td>1.822098</td>
+      <td>1.544864</td>
+      <td>1.367617</td>
+      <td>1.628909</td>
+      <td>2.177494</td>
+      <td>...</td>
+      <td>0.887556</td>
+      <td>0.636290</td>
+      <td>0.602017</td>
+      <td>1.257530</td>
+      <td>1.711052</td>
+      <td>0.834838</td>
+      <td>0.963288</td>
+      <td>NaN</td>
+      <td>1.720402</td>
+      <td>0.686934</td>
+    </tr>
+    <tr>
+      <th>德国DAX</th>
+      <td>1.077131</td>
+      <td>0.663243</td>
+      <td>0.882771</td>
+      <td>0.773503</td>
+      <td>1.838769</td>
+      <td>1.643591</td>
+      <td>1.523936</td>
+      <td>1.346689</td>
+      <td>1.162178</td>
+      <td>1.939725</td>
+      <td>...</td>
+      <td>1.038570</td>
+      <td>0.457784</td>
+      <td>0.531716</td>
+      <td>1.236603</td>
+      <td>1.244321</td>
+      <td>0.724667</td>
+      <td>0.958409</td>
+      <td>NaN</td>
+      <td>1.253671</td>
+      <td>0.598327</td>
+    </tr>
+    <tr>
+      <th>富时意大利MIB</th>
+      <td>1.038055</td>
+      <td>0.895207</td>
+      <td>0.878367</td>
+      <td>0.956038</td>
+      <td>1.856071</td>
+      <td>1.244675</td>
+      <td>1.471550</td>
+      <td>1.263983</td>
+      <td>1.944647</td>
+      <td>2.183895</td>
+      <td>...</td>
+      <td>0.601456</td>
+      <td>0.956165</td>
+      <td>0.749037</td>
+      <td>1.217638</td>
+      <td>2.050192</td>
+      <td>1.008302</td>
+      <td>1.030952</td>
+      <td>NaN</td>
+      <td>1.967995</td>
+      <td>1.038458</td>
+    </tr>
+    <tr>
+      <th>法国CAC40</th>
+      <td>1.129176</td>
+      <td>0.841009</td>
+      <td>0.673346</td>
+      <td>0.641646</td>
+      <td>2.016535</td>
+      <td>1.783360</td>
+      <td>1.895214</td>
+      <td>1.717967</td>
+      <td>1.645297</td>
+      <td>2.100329</td>
+      <td>...</td>
+      <td>0.813370</td>
+      <td>0.597552</td>
+      <td>0.485869</td>
+      <td>1.607880</td>
+      <td>1.691580</td>
+      <td>0.738307</td>
+      <td>0.886122</td>
+      <td>NaN</td>
+      <td>1.704827</td>
+      <td>0.671879</td>
+    </tr>
+    <tr>
+      <th>西班牙IBEX35</th>
+      <td>1.223635</td>
+      <td>0.862859</td>
+      <td>1.061071</td>
+      <td>1.148835</td>
+      <td>1.254615</td>
+      <td>1.846131</td>
+      <td>1.933971</td>
+      <td>1.865438</td>
+      <td>1.962809</td>
+      <td>2.020678</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>1.011147</td>
+      <td>0.794886</td>
+      <td>1.819094</td>
+      <td>2.034865</td>
+      <td>1.203741</td>
+      <td>1.135127</td>
+      <td>NaN</td>
+      <td>2.013844</td>
+      <td>1.062619</td>
+    </tr>
+    <tr>
+      <th>英国富时100</th>
+      <td>1.084129</td>
+      <td>0.670126</td>
+      <td>0.784810</td>
+      <td>0.805584</td>
+      <td>1.845652</td>
+      <td>1.185807</td>
+      <td>1.529719</td>
+      <td>1.352471</td>
+      <td>1.047745</td>
+      <td>1.825292</td>
+      <td>...</td>
+      <td>1.011147</td>
+      <td>0.000000</td>
+      <td>0.515133</td>
+      <td>1.242385</td>
+      <td>1.094027</td>
+      <td>0.706871</td>
+      <td>0.729079</td>
+      <td>NaN</td>
+      <td>1.116040</td>
+      <td>0.566385</td>
+    </tr>
+    <tr>
+      <th>比利时BFX</th>
+      <td>0.993365</td>
+      <td>0.702059</td>
+      <td>0.780991</td>
+      <td>0.837040</td>
+      <td>1.877585</td>
+      <td>1.700940</td>
+      <td>1.773171</td>
+      <td>1.741703</td>
+      <td>1.195610</td>
+      <td>1.973157</td>
+      <td>...</td>
+      <td>0.794886</td>
+      <td>0.515133</td>
+      <td>0.000000</td>
+      <td>1.695550</td>
+      <td>1.609160</td>
+      <td>0.851141</td>
+      <td>0.893644</td>
+      <td>NaN</td>
+      <td>1.218958</td>
+      <td>0.596692</td>
+    </tr>
+    <tr>
+      <th>上证指数</th>
+      <td>2.097374</td>
+      <td>0.993491</td>
+      <td>2.027195</td>
+      <td>2.010106</td>
+      <td>1.242807</td>
+      <td>1.259511</td>
+      <td>0.287334</td>
+      <td>0.110086</td>
+      <td>2.006647</td>
+      <td>2.008870</td>
+      <td>...</td>
+      <td>1.819094</td>
+      <td>1.242385</td>
+      <td>1.695550</td>
+      <td>0.000000</td>
+      <td>1.183381</td>
+      <td>1.949256</td>
+      <td>1.971464</td>
+      <td>NaN</td>
+      <td>1.917258</td>
+      <td>1.808770</td>
+    </tr>
+    <tr>
+      <th>澳大利亚标普200指数</th>
+      <td>2.001862</td>
+      <td>1.172006</td>
+      <td>1.226361</td>
+      <td>1.526637</td>
+      <td>1.207964</td>
+      <td>0.970415</td>
+      <td>1.103009</td>
+      <td>1.159402</td>
+      <td>1.126957</td>
+      <td>1.133275</td>
+      <td>...</td>
+      <td>2.034865</td>
+      <td>1.094027</td>
+      <td>1.609160</td>
+      <td>1.183381</td>
+      <td>0.000000</td>
+      <td>1.187983</td>
+      <td>1.823106</td>
+      <td>NaN</td>
+      <td>0.733877</td>
+      <td>1.660412</td>
+    </tr>
+    <tr>
+      <th>纳斯达克</th>
+      <td>1.214805</td>
+      <td>1.053294</td>
+      <td>0.537505</td>
+      <td>0.338654</td>
+      <td>2.228820</td>
+      <td>1.833566</td>
+      <td>2.124406</td>
+      <td>2.059342</td>
+      <td>1.754616</td>
+      <td>1.937600</td>
+      <td>...</td>
+      <td>1.203741</td>
+      <td>0.706871</td>
+      <td>0.851141</td>
+      <td>1.949256</td>
+      <td>1.187983</td>
+      <td>0.000000</td>
+      <td>0.723393</td>
+      <td>NaN</td>
+      <td>1.153072</td>
+      <td>0.914123</td>
+    </tr>
+    <tr>
+      <th>墨西哥MXX</th>
+      <td>1.164233</td>
+      <td>1.079309</td>
+      <td>0.742959</td>
+      <td>0.765694</td>
+      <td>1.945000</td>
+      <td>1.110173</td>
+      <td>2.150421</td>
+      <td>2.081550</td>
+      <td>1.142890</td>
+      <td>1.214206</td>
+      <td>...</td>
+      <td>1.135127</td>
+      <td>0.729079</td>
+      <td>0.893644</td>
+      <td>1.971464</td>
+      <td>1.823106</td>
+      <td>0.723393</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>1.156470</td>
+      <td>0.991894</td>
+    </tr>
+    <tr>
+      <th>孟买Sensex30</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>日经225</th>
+      <td>2.068939</td>
+      <td>1.248411</td>
+      <td>1.690576</td>
+      <td>1.491725</td>
+      <td>1.241174</td>
+      <td>1.037492</td>
+      <td>1.836886</td>
+      <td>1.893279</td>
+      <td>1.101723</td>
+      <td>1.096684</td>
+      <td>...</td>
+      <td>2.013844</td>
+      <td>1.116040</td>
+      <td>1.218958</td>
+      <td>1.917258</td>
+      <td>0.733877</td>
+      <td>1.153072</td>
+      <td>1.156470</td>
+      <td>NaN</td>
+      <td>0.000000</td>
+      <td>1.682425</td>
+    </tr>
+    <tr>
+      <th>瑞士SMI</th>
+      <td>1.108556</td>
+      <td>0.873353</td>
+      <td>0.910693</td>
+      <td>0.931423</td>
+      <td>1.983736</td>
+      <td>1.752192</td>
+      <td>1.944465</td>
+      <td>1.912996</td>
+      <td>1.158651</td>
+      <td>1.936197</td>
+      <td>...</td>
+      <td>1.062619</td>
+      <td>0.566385</td>
+      <td>0.596692</td>
+      <td>1.808770</td>
+      <td>1.660412</td>
+      <td>0.914123</td>
+      <td>0.991894</td>
+      <td>NaN</td>
+      <td>1.682425</td>
+      <td>0.000000</td>
+    </tr>
+  </tbody>
+</table>
+<p>24 rows × 24 columns</p>
+</div></div></div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Networks/附录-最短路径"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By FinX Lab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

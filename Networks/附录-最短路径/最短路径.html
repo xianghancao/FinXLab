@@ -1,0 +1,1652 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>最短路径 &#8212; FinX Lab</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-examples.css?v=e236af4b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/micromodal.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../../_static/tabs.js?v=3ee01567"></script>
+    <script src="../../_static/js/hoverxref.js"></script>
+    <script src="../../_static/js/tooltipster.bundle.min.js"></script>
+    <script src="../../_static/js/micromodal.min.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Networks/附录-最短路径/最短路径';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../Home/home.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/me.jpg" class="logo__image only-light" alt="FinX Lab - Home"/>
+    <script>document.write(`<img src="../../_static/me.jpg" class="logo__image only-dark" alt="FinX Lab - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../Home/home.html">
+                    FinX Lab
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../AboutMe/%E7%9B%AE%E5%BD%95.html">About Me</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../AboutMe/Events/article.html">Events</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../NLP/%E7%9B%AE%E5%BD%95.html">NLP</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../NLP/241128-%E9%A2%84%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B%E8%BF%9B%E8%A1%8C%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB/article.html">使用 DistilBERT 进行情感分析：基于预训练模型的实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../NLP/241130-%E6%96%87%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%9F%A2%E9%87%8F%E5%8C%96%E4%B8%8EKeras%E4%B8%AD%E7%9A%84Tokenizer%E4%BD%BF%E7%94%A8/article.html">文本数据矢量化与Keras中的Tokenizer使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../NLP/241224-Word-metric%20method%20VS%20Semantic%20measure/article.html">Word-metric methods VS Semantic Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../FinancialEconomics/%E7%9B%AE%E5%BD%95.html">Financial Economics</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../FinancialEconomics/240410-KPPS%20H-Step-Ahead%20Forecast%20Error%20Variance%20Decomposition/article.html">KPPS H-Step-Ahead Forecast Error Variance Decomposition(FEVD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../FinancialEconomics/240620-KPPS%20H%E6%AD%A5%E9%A2%84%E6%B5%8B%E8%AF%AF%E5%B7%AE%E6%96%B9%E5%B7%AE%E5%88%86%E8%A7%A3%E7%9A%84Python%E5%AE%9E%E7%8E%B0/article.html">KPPS H步预测误差方差分解的Python实现</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../FinancialEconomics/240717-%E5%87%A0%E7%A7%8D%E6%B3%A2%E5%8A%A8%E7%8E%87%E7%9A%84%E8%AE%A1%E7%AE%97/article.html">几种波动率的计算</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../FinancialEconomics/230501-DY%20method/article.html">Diebold&amp;Yilmaz method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../FinancialEconomics/230501-DCC-GARCH%E7%9A%84R%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/article.html">DCC-GARCH的R语言实现</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../%E7%9B%AE%E5%BD%95.html">Networks</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../240718-%E7%BD%91%E7%BB%9C%E7%9A%84%E7%9B%B8%E5%85%B3%E6%80%A7%E5%9B%BE%E7%BB%98%E5%88%B6/article.html">网络的相关性图绘制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../240721-%E5%9F%BA%E4%BA%8EiGraph%E7%9A%84%E7%BD%91%E7%BB%9C%E5%88%86%E6%9E%90%E5%92%8C%E7%BB%98%E5%9B%BE/article.html">基于iGraph的网络分析和绘图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../240723-%E5%A6%82%E4%BD%95%E7%BB%98%E5%88%B6%E5%9C%B0%E7%90%86%E5%9B%BE/article.html">如何绘制地理图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../240805-%E5%9F%BA%E4%BA%8ENetworkx%E7%9A%84%E7%BD%91%E7%BB%9C%E5%88%86%E6%9E%90%E5%92%8C%E7%BB%98%E5%9B%BE/article.html">基于Networkx的网络分析和绘图</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../Quant/%E7%9B%AE%E5%BD%95.html">Quant</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../Quant/230501-%E5%90%91%E9%87%8F%E5%8C%96%E5%9B%9E%E6%B5%8B%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E8%AE%A1/article.html">向量化回测系统的设计</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Networks/附录-最短路径/最短路径.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>最短路径</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">读取数据</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">清洗数据</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">求对数收益率</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">相关系数矩阵</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">全局相关系数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rolling">rolling相关系数</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">最短路径</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">全局最短路径</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">rolling最短路径</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rolling-w">rolling w</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">熵值</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>最短路径<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<section id="id2">
+<h2>读取数据<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;交易时间&#39;</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;../附录_数据/&#39;</span>
+<span class="n">list_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;指数数据表.xlsx&#39;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;指数编码&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">str_</span><span class="p">},</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;指数编码&#39;</span><span class="p">)</span>
+<span class="n">list_df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">list_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">str_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">list_dict</span> <span class="o">=</span> <span class="n">list_df</span><span class="p">[</span><span class="s1">&#39;指数名称&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+<span class="n">list_dict</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;000001&#39;: &#39;上证指数&#39;,
+ &#39;HSI&#39;: &#39;恒生指数&#39;,
+ &#39;KS11&#39;: &#39;韩国综合指数&#39;,
+ &#39;STI&#39;: &#39;富时新加坡海峡时报&#39;,
+ &#39;N225&#39;: &#39;日经225&#39;,
+ &#39;SENSEX&#39;: &#39;孟买Sensex30&#39;,
+ &#39;AS51&#39;: &#39;澳大利亚标普200指数&#39;,
+ &#39;RTS&#39;: &#39;俄罗斯RTS&#39;,
+ &#39;FCHI&#39;: &#39;法国CAC40&#39;,
+ &#39;GDAXI&#39;: &#39;德国DAX&#39;,
+ &#39;IBEX&#39;: &#39;西班牙IBEX35&#39;,
+ &#39;MIB&#39;: &#39;富时意大利MIB&#39;,
+ &#39;AEX&#39;: &#39;荷兰AEX&#39;,
+ &#39;FTSE&#39;: &#39;英国富时100&#39;,
+ &#39;SPX&#39;: &#39;标普500&#39;,
+ &#39;MXX&#39;: &#39;墨西哥MXX&#39;,
+ &#39;BFX&#39;: &#39;比利时BFX&#39;,
+ &#39;ATX&#39;: &#39;奥地利ATX&#39;,
+ &#39;SSMI&#39;: &#39;瑞士SMI&#39;,
+ &#39;DJIA&#39;: &#39;道琼斯工业平均&#39;,
+ &#39;IXIC&#39;: &#39;纳斯达克&#39;,
+ &#39;399001&#39;: &#39;深证成指&#39;,
+ &#39;000300&#39;: &#39;沪深300&#39;,
+ &#39;TWII&#39;: &#39;台湾加权&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ret_origin_df</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;../附录_数据/指数日线数据/&#39;</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.xls&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;K线导出_&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_日线数据&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">ret_origin_df</span><span class="p">[</span><span class="n">list_dict</span><span class="p">[</span><span class="n">code</span><span class="p">]]</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">i</span><span class="p">))[</span><span class="s1">&#39;收盘价&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ret_origin_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>俄罗斯RTS</th>
+      <th>奥地利ATX</th>
+      <th>道琼斯工业平均</th>
+      <th>标普500</th>
+      <th>台湾加权</th>
+      <th>恒生指数</th>
+      <th>深证成指</th>
+      <th>沪深300</th>
+      <th>富时新加坡海峡时报</th>
+      <th>韩国综合指数</th>
+      <th>...</th>
+      <th>西班牙IBEX35</th>
+      <th>英国富时100</th>
+      <th>比利时BFX</th>
+      <th>上证指数</th>
+      <th>澳大利亚标普200指数</th>
+      <th>纳斯达克</th>
+      <th>墨西哥MXX</th>
+      <th>孟买Sensex30</th>
+      <th>日经225</th>
+      <th>瑞士SMI</th>
+    </tr>
+    <tr>
+      <th>交易时间</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000-01-05</th>
+      <td>173.00</td>
+      <td>1192.89</td>
+      <td>11122.65</td>
+      <td>1402.11</td>
+      <td>8849.87</td>
+      <td>15846.71</td>
+      <td>3486.285</td>
+      <td>NaN</td>
+      <td>2425.90</td>
+      <td>986.31</td>
+      <td>...</td>
+      <td>10863.1</td>
+      <td>6535.9</td>
+      <td>3057.53</td>
+      <td>1409.68</td>
+      <td>3018.7</td>
+      <td>3877.54</td>
+      <td>6764.31</td>
+      <td>5357.00</td>
+      <td>18542.55</td>
+      <td>7181.3</td>
+    </tr>
+    <tr>
+      <th>2000-01-06</th>
+      <td>186.26</td>
+      <td>NaN</td>
+      <td>11253.26</td>
+      <td>1403.45</td>
+      <td>8922.03</td>
+      <td>15153.23</td>
+      <td>3655.200</td>
+      <td>NaN</td>
+      <td>2409.00</td>
+      <td>960.79</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>6447.2</td>
+      <td>3061.09</td>
+      <td>1463.94</td>
+      <td>2999.3</td>
+      <td>3727.13</td>
+      <td>6751.65</td>
+      <td>5421.53</td>
+      <td>18168.27</td>
+      <td>7280.6</td>
+    </tr>
+    <tr>
+      <th>2000-01-10</th>
+      <td>200.81</td>
+      <td>1236.09</td>
+      <td>11572.20</td>
+      <td>1457.60</td>
+      <td>9102.60</td>
+      <td>15848.15</td>
+      <td>3921.483</td>
+      <td>NaN</td>
+      <td>2457.59</td>
+      <td>987.24</td>
+      <td>...</td>
+      <td>11173.3</td>
+      <td>6607.7</td>
+      <td>3203.75</td>
+      <td>1545.11</td>
+      <td>3084.0</td>
+      <td>4049.67</td>
+      <td>7333.70</td>
+      <td>5518.39</td>
+      <td>NaN</td>
+      <td>7452.8</td>
+    </tr>
+    <tr>
+      <th>2000-01-11</th>
+      <td>199.57</td>
+      <td>1225.68</td>
+      <td>11511.08</td>
+      <td>1438.56</td>
+      <td>8927.03</td>
+      <td>15862.09</td>
+      <td>3716.784</td>
+      <td>NaN</td>
+      <td>2449.74</td>
+      <td>981.33</td>
+      <td>...</td>
+      <td>11012.4</td>
+      <td>6518.9</td>
+      <td>3148.90</td>
+      <td>1479.78</td>
+      <td>3160.8</td>
+      <td>3921.19</td>
+      <td>7143.13</td>
+      <td>5296.30</td>
+      <td>18850.92</td>
+      <td>7420.1</td>
+    </tr>
+    <tr>
+      <th>2000-01-12</th>
+      <td>196.88</td>
+      <td>1206.27</td>
+      <td>11551.10</td>
+      <td>1432.25</td>
+      <td>9144.65</td>
+      <td>15714.20</td>
+      <td>3605.824</td>
+      <td>NaN</td>
+      <td>2452.61</td>
+      <td>955.01</td>
+      <td>...</td>
+      <td>10851.8</td>
+      <td>6532.8</td>
+      <td>3110.25</td>
+      <td>1438.02</td>
+      <td>3088.4</td>
+      <td>3850.02</td>
+      <td>7174.10</td>
+      <td>5491.20</td>
+      <td>18677.42</td>
+      <td>7440.2</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 24 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="id3">
+<h2>清洗数据<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ret_cleaned_df</span> <span class="o">=</span> <span class="n">ret_origin_df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;ffill&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ret_cleaned_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>俄罗斯RTS</th>
+      <th>奥地利ATX</th>
+      <th>道琼斯工业平均</th>
+      <th>标普500</th>
+      <th>台湾加权</th>
+      <th>恒生指数</th>
+      <th>深证成指</th>
+      <th>沪深300</th>
+      <th>富时新加坡海峡时报</th>
+      <th>韩国综合指数</th>
+      <th>...</th>
+      <th>西班牙IBEX35</th>
+      <th>英国富时100</th>
+      <th>比利时BFX</th>
+      <th>上证指数</th>
+      <th>澳大利亚标普200指数</th>
+      <th>纳斯达克</th>
+      <th>墨西哥MXX</th>
+      <th>孟买Sensex30</th>
+      <th>日经225</th>
+      <th>瑞士SMI</th>
+    </tr>
+    <tr>
+      <th>交易时间</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2005-01-05</th>
+      <td>552.22</td>
+      <td>2446.96</td>
+      <td>10597.83</td>
+      <td>1183.74</td>
+      <td>5988.37</td>
+      <td>13764.36</td>
+      <td>3052.860</td>
+      <td>992.56</td>
+      <td>1998.51</td>
+      <td>885.19</td>
+      <td>...</td>
+      <td>9024.4</td>
+      <td>4806.0</td>
+      <td>2971.79</td>
+      <td>1251.94</td>
+      <td>4039.4</td>
+      <td>2091.24</td>
+      <td>12591.33</td>
+      <td>6458.84</td>
+      <td>11437.52</td>
+      <td>5725.5</td>
+    </tr>
+    <tr>
+      <th>2005-01-08</th>
+      <td>552.22</td>
+      <td>2446.96</td>
+      <td>10597.83</td>
+      <td>1183.74</td>
+      <td>5988.37</td>
+      <td>13764.36</td>
+      <td>3052.860</td>
+      <td>992.56</td>
+      <td>1998.51</td>
+      <td>885.19</td>
+      <td>...</td>
+      <td>9024.4</td>
+      <td>4806.0</td>
+      <td>2971.79</td>
+      <td>1251.94</td>
+      <td>4039.4</td>
+      <td>2091.24</td>
+      <td>12591.33</td>
+      <td>6458.84</td>
+      <td>11437.52</td>
+      <td>5725.5</td>
+    </tr>
+    <tr>
+      <th>2005-01-11</th>
+      <td>547.85</td>
+      <td>2435.34</td>
+      <td>10556.22</td>
+      <td>1182.99</td>
+      <td>5975.66</td>
+      <td>13509.25</td>
+      <td>3069.570</td>
+      <td>997.14</td>
+      <td>2008.43</td>
+      <td>884.29</td>
+      <td>...</td>
+      <td>8966.4</td>
+      <td>4818.7</td>
+      <td>2980.23</td>
+      <td>1257.46</td>
+      <td>4072.7</td>
+      <td>2079.62</td>
+      <td>12216.80</td>
+      <td>6222.87</td>
+      <td>11539.99</td>
+      <td>5713.1</td>
+    </tr>
+    <tr>
+      <th>2005-01-12</th>
+      <td>545.31</td>
+      <td>2421.63</td>
+      <td>10617.78</td>
+      <td>1187.70</td>
+      <td>5879.08</td>
+      <td>13565.31</td>
+      <td>3064.344</td>
+      <td>996.75</td>
+      <td>1995.15</td>
+      <td>880.03</td>
+      <td>...</td>
+      <td>8945.7</td>
+      <td>4783.6</td>
+      <td>2973.92</td>
+      <td>1256.92</td>
+      <td>4070.4</td>
+      <td>2092.53</td>
+      <td>12329.16</td>
+      <td>6102.74</td>
+      <td>11453.39</td>
+      <td>5669.6</td>
+    </tr>
+    <tr>
+      <th>2005-01-13</th>
+      <td>543.90</td>
+      <td>2415.01</td>
+      <td>10505.83</td>
+      <td>1177.45</td>
+      <td>5853.94</td>
+      <td>13573.28</td>
+      <td>3074.365</td>
+      <td>996.88</td>
+      <td>1998.98</td>
+      <td>885.54</td>
+      <td>...</td>
+      <td>9016.8</td>
+      <td>4800.3</td>
+      <td>2959.72</td>
+      <td>1256.31</td>
+      <td>4069.5</td>
+      <td>2070.56</td>
+      <td>12462.90</td>
+      <td>6221.06</td>
+      <td>11358.22</td>
+      <td>5687.8</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 24 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="id4">
+<h2>求对数收益率<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ret_log_df</span> <span class="o">=</span> <span class="p">(</span><span class="n">ret_cleaned_df</span><span class="o">/</span><span class="n">ret_cleaned_df</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">)</span>
+<span class="n">ret_log_df</span> <span class="o">=</span> <span class="n">ret_log_df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">ret_log_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>俄罗斯RTS</th>
+      <th>奥地利ATX</th>
+      <th>道琼斯工业平均</th>
+      <th>标普500</th>
+      <th>台湾加权</th>
+      <th>恒生指数</th>
+      <th>深证成指</th>
+      <th>沪深300</th>
+      <th>富时新加坡海峡时报</th>
+      <th>韩国综合指数</th>
+      <th>...</th>
+      <th>西班牙IBEX35</th>
+      <th>英国富时100</th>
+      <th>比利时BFX</th>
+      <th>上证指数</th>
+      <th>澳大利亚标普200指数</th>
+      <th>纳斯达克</th>
+      <th>墨西哥MXX</th>
+      <th>孟买Sensex30</th>
+      <th>日经225</th>
+      <th>瑞士SMI</th>
+    </tr>
+    <tr>
+      <th>交易时间</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2005-01-08</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>2005-01-11</th>
+      <td>-0.007945</td>
+      <td>-0.004760</td>
+      <td>-0.003934</td>
+      <td>-0.000634</td>
+      <td>-0.002125</td>
+      <td>-0.018708</td>
+      <td>0.005459</td>
+      <td>0.004604</td>
+      <td>0.004951</td>
+      <td>-0.001017</td>
+      <td>...</td>
+      <td>-0.006448</td>
+      <td>0.002639</td>
+      <td>0.002836</td>
+      <td>0.004399</td>
+      <td>0.008210</td>
+      <td>-0.005572</td>
+      <td>-0.030196</td>
+      <td>-0.037219</td>
+      <td>0.008919</td>
+      <td>-0.002168</td>
+    </tr>
+    <tr>
+      <th>2005-01-12</th>
+      <td>-0.004647</td>
+      <td>-0.005646</td>
+      <td>0.005815</td>
+      <td>0.003974</td>
+      <td>-0.016294</td>
+      <td>0.004141</td>
+      <td>-0.001704</td>
+      <td>-0.000391</td>
+      <td>-0.006634</td>
+      <td>-0.004829</td>
+      <td>...</td>
+      <td>-0.002311</td>
+      <td>-0.007311</td>
+      <td>-0.002120</td>
+      <td>-0.000430</td>
+      <td>-0.000565</td>
+      <td>0.006189</td>
+      <td>0.009155</td>
+      <td>-0.019493</td>
+      <td>-0.007533</td>
+      <td>-0.007643</td>
+    </tr>
+    <tr>
+      <th>2005-01-13</th>
+      <td>-0.002589</td>
+      <td>-0.002737</td>
+      <td>-0.010600</td>
+      <td>-0.008668</td>
+      <td>-0.004285</td>
+      <td>0.000587</td>
+      <td>0.003265</td>
+      <td>0.000130</td>
+      <td>0.001918</td>
+      <td>0.006242</td>
+      <td>...</td>
+      <td>0.007917</td>
+      <td>0.003485</td>
+      <td>-0.004786</td>
+      <td>-0.000485</td>
+      <td>-0.000221</td>
+      <td>-0.010555</td>
+      <td>0.010789</td>
+      <td>0.019202</td>
+      <td>-0.008344</td>
+      <td>0.003205</td>
+    </tr>
+    <tr>
+      <th>2005-01-14</th>
+      <td>0.008768</td>
+      <td>0.003856</td>
+      <td>0.004954</td>
+      <td>0.005987</td>
+      <td>0.006060</td>
+      <td>-0.005800</td>
+      <td>-0.006149</td>
+      <td>-0.008634</td>
+      <td>-0.000681</td>
+      <td>0.021848</td>
+      <td>...</td>
+      <td>0.000920</td>
+      <td>0.004261</td>
+      <td>-0.000314</td>
+      <td>-0.008545</td>
+      <td>-0.001943</td>
+      <td>0.008344</td>
+      <td>0.018432</td>
+      <td>-0.007623</td>
+      <td>0.007034</td>
+      <td>0.007409</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 24 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.sans-serif&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;SimHei&#39;</span>  <span class="c1"># 设置字体为SimHei</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.unicode_minus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># 解决负号“-”显示异常</span>
+<span class="n">ret_log_df</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;交易时间&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/ef054871d59a845381f6681227adb0f77dc72bc98e58331f702d5e46bbb80349.png" src="../../_images/ef054871d59a845381f6681227adb0f77dc72bc98e58331f702d5e46bbb80349.png" />
+</div>
+</div>
+</section>
+<section id="id5">
+<h2>相关系数矩阵<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<section id="id6">
+<h3>全局相关系数<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># correlation using heatmap</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">ret_log_df</span><span class="o">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">annot</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="../../_images/df52287f2329e5628c61e1fb03daf5bcdccb138cfb817cd663684f2076254238.png" src="../../_images/df52287f2329e5628c61e1fb03daf5bcdccb138cfb817cd663684f2076254238.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">clustermap</span><span class="p">(</span><span class="n">ret_log_df</span><span class="p">[[</span><span class="s1">&#39;俄罗斯RTS&#39;</span><span class="p">,</span> <span class="s1">&#39;奥地利ATX&#39;</span><span class="p">,</span> <span class="s1">&#39;道琼斯工业平均&#39;</span><span class="p">,</span> <span class="s1">&#39;标普500&#39;</span><span class="p">,</span> <span class="s1">&#39;台湾加权&#39;</span><span class="p">,</span> <span class="s1">&#39;恒生指数&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;富时新加坡海峡时报&#39;</span><span class="p">,</span> <span class="s1">&#39;韩国综合指数&#39;</span><span class="p">,</span> <span class="s1">&#39;荷兰AEX&#39;</span><span class="p">,</span> <span class="s1">&#39;德国DAX&#39;</span><span class="p">,</span> <span class="s1">&#39;富时意大利MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;法国CAC40&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;西班牙IBEX35&#39;</span><span class="p">,</span> <span class="s1">&#39;英国富时100&#39;</span><span class="p">,</span> <span class="s1">&#39;比利时BFX&#39;</span><span class="p">,</span> <span class="s1">&#39;上证指数&#39;</span><span class="p">,</span> <span class="s1">&#39;澳大利亚标普200指数&#39;</span><span class="p">,</span> <span class="s1">&#39;纳斯达克&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;墨西哥MXX&#39;</span><span class="p">,</span> <span class="s1">&#39;孟买Sensex30&#39;</span><span class="p">,</span> <span class="s1">&#39;日经225&#39;</span><span class="p">,</span> <span class="s1">&#39;瑞士SMI&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">600</span><span class="p">:]</span><span class="o">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">ax_row_dendrogram</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+<span class="n">g</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;heat_map.jpg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 432x288 with 0 Axes&gt;
+</pre></div>
+</div>
+<img alt="../../_images/a5e0c661c85c225517cc6e5b1dca807ff3eeaab28e6ad5ec5fcc4553bf182ba3.png" src="../../_images/a5e0c661c85c225517cc6e5b1dca807ff3eeaab28e6ad5ec5fcc4553bf182ba3.png" />
+</div>
+</div>
+</section>
+<section id="rolling">
+<h3>rolling相关系数<a class="headerlink" href="#rolling" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="k">def</span> <span class="nf">cal_rolling_corr</span><span class="p">(</span><span class="n">ret_df</span><span class="p">,</span> <span class="n">min_periods</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    df: pd.DataFrame, 行标题日期</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_corr_ret_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">_corr_ret_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">ret_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">min_periods</span><span class="p">:</span> 
+            <span class="n">_corr_ret_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+            <span class="n">_corr_ret_df</span><span class="p">[</span><span class="n">ret_df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="o">*</span> <span class="n">ret_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_ret_rolling_df</span> <span class="o">=</span> <span class="n">ret_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="n">min_periods</span><span class="p">:</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="n">_corr</span> <span class="o">=</span> <span class="p">(</span><span class="n">_ret_rolling_df</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">_ret_rolling_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">_corr_ret_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_corr</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+            <span class="n">_corr_ret_df</span><span class="p">[</span><span class="n">ret_df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">=</span><span class="n">_corr</span>
+    <span class="n">rolling_corr_ts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">_corr_ret_list</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">ret_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="n">rolling_corr_df</span> <span class="o">=</span> <span class="n">_corr_ret_df</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">return</span> <span class="n">rolling_corr_ts</span><span class="p">,</span> <span class="n">rolling_corr_df</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rolling_corr_ts</span><span class="p">,</span> <span class="n">rolling_corr_df</span><span class="o">=</span> <span class="n">cal_rolling_corr</span><span class="p">(</span><span class="n">ret_log_df</span><span class="p">[[</span><span class="s1">&#39;俄罗斯RTS&#39;</span><span class="p">,</span> <span class="s1">&#39;奥地利ATX&#39;</span><span class="p">,</span> <span class="s1">&#39;道琼斯工业平均&#39;</span><span class="p">,</span> <span class="s1">&#39;标普500&#39;</span><span class="p">,</span> <span class="s1">&#39;台湾加权&#39;</span><span class="p">,</span> <span class="s1">&#39;恒生指数&#39;</span><span class="p">,</span> 
+       <span class="s1">&#39;富时新加坡海峡时报&#39;</span><span class="p">,</span> <span class="s1">&#39;韩国综合指数&#39;</span><span class="p">,</span> <span class="s1">&#39;荷兰AEX&#39;</span><span class="p">,</span> <span class="s1">&#39;德国DAX&#39;</span><span class="p">,</span> <span class="s1">&#39;富时意大利MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;法国CAC40&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;西班牙IBEX35&#39;</span><span class="p">,</span> <span class="s1">&#39;英国富时100&#39;</span><span class="p">,</span> <span class="s1">&#39;比利时BFX&#39;</span><span class="p">,</span>  <span class="s1">&#39;澳大利亚标普200指数&#39;</span><span class="p">,</span> <span class="s1">&#39;纳斯达克&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;墨西哥MXX&#39;</span><span class="p">,</span> <span class="s1">&#39;孟买Sensex30&#39;</span><span class="p">,</span> <span class="s1">&#39;日经225&#39;</span><span class="p">,</span> <span class="s1">&#39;瑞士SMI&#39;</span><span class="p">]],</span> <span class="n">min_periods</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+<span class="c1"># rolling_corr_ts, rolling_corr_df= cal_rolling_corr(ret_log_df, min_periods=60)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "afc9fe5e7a42447db0b442406616308a", "version_major": 2, "version_minor": 0}</script><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/7m/rgg1hhpj3yb1j0cf0c82yq1w0000gn/T/ipykernel_59829/1968767220.py:11: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  _corr_ret_df[ret_df.index[i]] = np.nan * ret_df.iloc[i]
+/var/folders/7m/rgg1hhpj3yb1j0cf0c82yq1w0000gn/T/ipykernel_59829/1968767220.py:16: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  _corr_ret_df[ret_df.index[i]]=_corr
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rolling_corr_ts</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;交易时间&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/f20d7b0417c1f6475c44ba106b89de1b5ddf51056e5d8bdca6449b1b01d426e4.png" src="../../_images/f20d7b0417c1f6475c44ba106b89de1b5ddf51056e5d8bdca6449b1b01d426e4.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rolling_corr_ts</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;交易时间&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/ac6de2b6226835a1a69cb7b86179f6960a739fdf364a57a841920fbc6e826abe.png" src="../../_images/ac6de2b6226835a1a69cb7b86179f6960a739fdf364a57a841920fbc6e826abe.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="id7">
+<h2>最短路径<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<div class="math notranslate nohighlight">
+\[
+l = \frac{1}{N(N-1)}\sum_{i\neq j}\tau_{ij}
+\]</div>
+<section id="id8">
+<h3>全局最短路径<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<p>由相关系数矩阵计算距离d，设置阈值<span class="math notranslate nohighlight">\(\epsilon\)</span>，来过滤掉部分相关系数低的节点相关系数。然后计算结点距离<span class="math notranslate nohighlight">\(d_{ij}\)</span>，得到邻接矩阵A</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tmp</span> <span class="o">=</span> <span class="n">ret_log_df</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+<span class="n">corr_threshold_val</span> <span class="o">=</span> <span class="mf">0.4</span>
+<span class="n">tmp</span><span class="p">[</span><span class="n">tmp</span><span class="o">&lt;</span><span class="n">corr_threshold_val</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="n">adjacent_matrix_df</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">tmp</span><span class="p">))</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">)</span>
+<span class="c1">#D.head()</span>
+<span class="c1">#D.to_csv(&#39;adjacent_df.csv&#39;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>调用dijkstra算法计算节点间的最短路径，生成最短路径矩阵dijkstra_matrix</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># from dijkstra_algo import Graph</span>
+<span class="c1"># DG = Graph(G_matrix=D)</span>
+<span class="c1"># dijkstra_matrix = DG.get_dijkstra_matrix() </span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">networkx_dijkstra_algo</span> <span class="kn">import</span> <span class="n">networkx_dijkstra</span>
+<span class="n">dijkstra_matrix_df</span> <span class="o">=</span> <span class="n">networkx_dijkstra</span><span class="p">(</span><span class="n">adjacent_matrix_df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">dijkstra_matrix</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">dijkstra_matrix</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dijkstra_matrix</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">tau</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.5864761285784652
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id9">
+<h3>rolling最短路径<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">networkx_dijkstra_algo</span> <span class="kn">import</span> <span class="n">networkx_dijkstra</span>
+<span class="k">def</span> <span class="nf">cal_dijkstra_matrix</span><span class="p">(</span><span class="n">ret_log_df</span><span class="p">,</span> <span class="n">corr_threshold_val</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">ret_log_df</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span>
+    <span class="n">tmp</span><span class="p">[</span><span class="n">tmp</span><span class="o">&lt;</span><span class="n">corr_threshold_val</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">D</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">tmp</span><span class="p">))</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">)</span>
+    <span class="n">dijkstra_matrix</span> <span class="o">=</span> <span class="n">networkx_dijkstra</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dijkstra_matrix</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="k">def</span> <span class="nf">cal_rolling_tao</span><span class="p">(</span><span class="n">ret_log_df</span><span class="p">,</span> <span class="n">min_periods</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    df: pd.DataFrame, 行标题日期</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tao_timeseries</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">ret_log_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">min_periods</span><span class="p">:</span> 
+            <span class="n">tao_timeseries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rolling_ret</span> <span class="o">=</span> <span class="n">ret_log_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="n">min_periods</span><span class="p">:</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="n">dijkstra_matrix</span> <span class="o">=</span> <span class="n">cal_dijkstra_matrix</span><span class="p">(</span><span class="n">rolling_ret</span><span class="p">)</span>
+            <span class="n">tao_timeseries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">dijkstra_matrix</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">dijkstra_matrix</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dijkstra_matrix</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tao_timeseries</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">ret_log_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tao</span> <span class="o">=</span> <span class="n">cal_rolling_tao</span><span class="p">(</span><span class="n">ret_log_df</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "96c0b5ad2c7642bfb9736802a441d1de", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tao</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+    </tr>
+    <tr>
+      <th>交易时间</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2005-01-08</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2005-01-11</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2005-01-12</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2005-01-13</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2005-01-14</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2022-04-27</th>
+      <td>1.140563</td>
+    </tr>
+    <tr>
+      <th>2022-04-28</th>
+      <td>1.137774</td>
+    </tr>
+    <tr>
+      <th>2022-04-29</th>
+      <td>1.138154</td>
+    </tr>
+    <tr>
+      <th>2022-05-04</th>
+      <td>1.125060</td>
+    </tr>
+    <tr>
+      <th>2022-05-05</th>
+      <td>1.139878</td>
+    </tr>
+  </tbody>
+</table>
+<p>4313 rows × 1 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tao</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;交易时间&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/643732c57d126b5466791c466e7c1b37791038a8a73d366a5d0557e412573ceb.png" src="../../_images/643732c57d126b5466791c466e7c1b37791038a8a73d366a5d0557e412573ceb.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="rolling-w">
+<h2>rolling w<a class="headerlink" href="#rolling-w" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="k">def</span> <span class="nf">cal_distance</span><span class="p">(</span><span class="n">ret_log_df</span><span class="p">,</span> <span class="n">corr_threshold_val</span><span class="o">=</span><span class="mf">0.3</span><span class="p">):</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">ret_log_df</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span>
+    <span class="n">tmp</span><span class="p">[</span><span class="n">tmp</span><span class="o">&lt;</span><span class="n">corr_threshold_val</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">D</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">tmp</span><span class="p">))</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">D</span>
+
+<span class="k">def</span> <span class="nf">cal_w</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    df: pd.DataFrame, 行标题日期</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">w_timeseries</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">min_periods</span><span class="p">:</span> 
+            <span class="n">w_timeseries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rolling_ret</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="n">min_periods</span><span class="p">:</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="n">D</span> <span class="o">=</span> <span class="n">cal_distance</span><span class="p">(</span><span class="n">rolling_ret</span><span class="p">)</span>
+            <span class="n">w</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="n">D</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">)</span>
+            <span class="n">w</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">w</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+            <span class="n">w_timeseries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">w_timeseries</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">ret</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w</span> <span class="o">=</span> <span class="n">cal_w</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "fff76fd0f05648138486393cb7339c7e", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;交易时间&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/14ca5f837c5b5e6dc68e64ac0f293ca23a24365b98a4a587b2fef8a0fbac9668.png" src="../../_images/14ca5f837c5b5e6dc68e64ac0f293ca23a24365b98a4a587b2fef8a0fbac9668.png" />
+</div>
+</div>
+</section>
+<section id="id10">
+<h2>熵值<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="k">def</span> <span class="nf">cal_distance</span><span class="p">(</span><span class="n">ret_log_df</span><span class="p">,</span> <span class="n">corr_threshold_val</span><span class="o">=</span><span class="mf">0.</span><span class="p">):</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">ret_log_df</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span>
+    <span class="n">tmp</span><span class="p">[</span><span class="n">tmp</span><span class="o">&lt;</span><span class="n">corr_threshold_val</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">D</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">tmp</span><span class="p">))</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">D</span>
+
+<span class="k">def</span> <span class="nf">cal_entropy</span><span class="p">(</span><span class="n">ret_log_df</span><span class="p">,</span> <span class="n">min_periods</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    df: pd.DataFrame, 行标题日期</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">entropy_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">corr_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">ret_log_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">min_periods</span><span class="p">:</span> 
+            <span class="n">corr_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+            <span class="n">entropy_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rolling_ret</span> <span class="o">=</span> <span class="n">ret_log_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="n">min_periods</span><span class="p">:</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="n">D</span> <span class="o">=</span> <span class="n">cal_distance</span><span class="p">(</span><span class="n">rolling_ret</span><span class="p">)</span>
+            <span class="n">e</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">D</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">D</span><span class="p">))</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">)</span> <span class="o">*</span> <span class="n">D</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">D</span><span class="p">))</span>
+            <span class="n">entropy_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="n">corr_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">rolling_ret</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+    <span class="n">entropy_ts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">entropy_list</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">ret_log_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="n">corr_rolling_ts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">corr_list</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">ret_log_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">entropy_ts</span><span class="p">,</span> <span class="n">corr_rolling_ts</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">entropy_ts</span><span class="p">,</span> <span class="n">corr_rolling_ts</span> <span class="o">=</span> <span class="n">cal_entropy</span><span class="p">(</span><span class="n">ret_log_df</span><span class="p">[[</span><span class="s1">&#39;俄罗斯RTS&#39;</span><span class="p">,</span> <span class="s1">&#39;奥地利ATX&#39;</span><span class="p">,</span> <span class="s1">&#39;道琼斯工业平均&#39;</span><span class="p">,</span> <span class="s1">&#39;标普500&#39;</span><span class="p">,</span> <span class="s1">&#39;台湾加权&#39;</span><span class="p">,</span> <span class="s1">&#39;恒生指数&#39;</span><span class="p">,</span> 
+       <span class="s1">&#39;富时新加坡海峡时报&#39;</span><span class="p">,</span> <span class="s1">&#39;韩国综合指数&#39;</span><span class="p">,</span> <span class="s1">&#39;荷兰AEX&#39;</span><span class="p">,</span> <span class="s1">&#39;德国DAX&#39;</span><span class="p">,</span> <span class="s1">&#39;富时意大利MIB&#39;</span><span class="p">,</span> <span class="s1">&#39;法国CAC40&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;西班牙IBEX35&#39;</span><span class="p">,</span> <span class="s1">&#39;英国富时100&#39;</span><span class="p">,</span> <span class="s1">&#39;比利时BFX&#39;</span><span class="p">,</span>  <span class="s1">&#39;澳大利亚标普200指数&#39;</span><span class="p">,</span> <span class="s1">&#39;纳斯达克&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;墨西哥MXX&#39;</span><span class="p">,</span> <span class="s1">&#39;孟买Sensex30&#39;</span><span class="p">,</span> <span class="s1">&#39;日经225&#39;</span><span class="p">,</span> <span class="s1">&#39;瑞士SMI&#39;</span><span class="p">]],</span> <span class="n">min_periods</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "73d473fe87e644b39e2dfcdf964649c4", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">entropy_ts</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;交易时间&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/7570429116f3cfb240d1380135b16243711768c43b02afb0a2a42275f781e011.png" src="../../_images/7570429116f3cfb240d1380135b16243711768c43b02afb0a2a42275f781e011.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corr_rolling_ts</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;交易时间&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/7fa0dc3c46f83b32aa23d7d099cadc97f59aa81045d75191849bf19ed95ea7d4.png" src="../../_images/7fa0dc3c46f83b32aa23d7d099cadc97f59aa81045d75191849bf19ed95ea7d4.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Networks/附录-最短路径"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">读取数据</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">清洗数据</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">求对数收益率</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">相关系数矩阵</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">全局相关系数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rolling">rolling相关系数</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">最短路径</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">全局最短路径</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">rolling最短路径</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rolling-w">rolling w</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">熵值</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By FinX Lab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
