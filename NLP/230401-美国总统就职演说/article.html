@@ -415,11 +415,24 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pretty printing has been turned OFF
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pretty printing has been turned ON
 NLTK库信息： {&#39;nltk_data path&#39;: &#39;nltk/nltk_data&#39;, &#39;nltk_data included&#39;: [&#39;tokenizers/punkt&#39;, &#39;taggers/averaged_perceptron_tagger&#39;, &#39;taggers/universal_tagset&#39;, &#39;corpora/.DS_Store&#39;, &#39;corpora/inaugural&#39;]}
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;At&#39;, &#39;eight&#39;, &quot;o&#39;clock&quot;, &#39;on&#39;, &#39;Thursday&#39;, &#39;morning&#39;, &#39;,&#39;, &#39;Arthur&#39;, &#39;did&#39;, &quot;n&#39;t&quot;, &#39;feel&#39;, &#39;very&#39;, &#39;good&#39;, &#39;.&#39;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;At&#39;,
+ &#39;eight&#39;,
+ &quot;o&#39;clock&quot;,
+ &#39;on&#39;,
+ &#39;Thursday&#39;,
+ &#39;morning&#39;,
+ &#39;,&#39;,
+ &#39;Arthur&#39;,
+ &#39;did&#39;,
+ &quot;n&#39;t&quot;,
+ &#39;feel&#39;,
+ &#39;very&#39;,
+ &#39;good&#39;,
+ &#39;.&#39;]
 </pre></div>
 </div>
 </div>
@@ -436,7 +449,13 @@ NLTK库信息： {&#39;nltk_data path&#39;: &#39;nltk/nltk_data&#39;, &#39;nltk_
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;Arthur&#39;, &#39;NOUN&#39;), (&#39;did&#39;, &#39;VERB&#39;), (&quot;n&#39;t&quot;, &#39;ADV&#39;), (&#39;feel&#39;, &#39;VERB&#39;), (&#39;very&#39;, &#39;ADV&#39;), (&#39;good&#39;, &#39;ADJ&#39;), (&#39;.&#39;, &#39;.&#39;)]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;Arthur&#39;, &#39;NOUN&#39;),
+ (&#39;did&#39;, &#39;VERB&#39;),
+ (&quot;n&#39;t&quot;, &#39;ADV&#39;),
+ (&#39;feel&#39;, &#39;VERB&#39;),
+ (&#39;very&#39;, &#39;ADV&#39;),
+ (&#39;good&#39;, &#39;ADJ&#39;),
+ (&#39;.&#39;, &#39;.&#39;)]
 </pre></div>
 </div>
 </div>
@@ -481,7 +500,7 @@ NLTK库信息： {&#39;nltk_data path&#39;: &#39;nltk/nltk_data&#39;, &#39;nltk_
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Frequency Distribution of Words&#39;)
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../../_images/2aca304d79f65277ddfe2d8f484271100a12401c632ee75c38fe48c36e9c3a33.svg"><img alt="../../_images/2aca304d79f65277ddfe2d8f484271100a12401c632ee75c38fe48c36e9c3a33.svg" height="420" src="../../_images/2aca304d79f65277ddfe2d8f484271100a12401c632ee75c38fe48c36e9c3a33.svg" width="420" /></a>
+<a class="reference internal image-reference" href="../../_images/6da967c0b3a19963c27c9ea106efaae8d1cebc3469b1090cca01875ef74702ed.svg"><img alt="../../_images/6da967c0b3a19963c27c9ea106efaae8d1cebc3469b1090cca01875ef74702ed.svg" height="420" src="../../_images/6da967c0b3a19963c27c9ea106efaae8d1cebc3469b1090cca01875ef74702ed.svg" width="420" /></a>
 </div>
 </div>
 </section>
@@ -526,7 +545,65 @@ NLTK库信息： {&#39;nltk_data path&#39;: &#39;nltk/nltk_data&#39;, &#39;nltk_
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;1789-Washington.txt&#39;, &#39;1793-Washington.txt&#39;, &#39;1797-Adams.txt&#39;, &#39;1801-Jefferson.txt&#39;, &#39;1805-Jefferson.txt&#39;, &#39;1809-Madison.txt&#39;, &#39;1813-Madison.txt&#39;, &#39;1817-Monroe.txt&#39;, &#39;1821-Monroe.txt&#39;, &#39;1825-Adams.txt&#39;, &#39;1829-Jackson.txt&#39;, &#39;1833-Jackson.txt&#39;, &#39;1837-VanBuren.txt&#39;, &#39;1841-Harrison.txt&#39;, &#39;1845-Polk.txt&#39;, &#39;1849-Taylor.txt&#39;, &#39;1853-Pierce.txt&#39;, &#39;1857-Buchanan.txt&#39;, &#39;1861-Lincoln.txt&#39;, &#39;1865-Lincoln.txt&#39;, &#39;1869-Grant.txt&#39;, &#39;1873-Grant.txt&#39;, &#39;1877-Hayes.txt&#39;, &#39;1881-Garfield.txt&#39;, &#39;1885-Cleveland.txt&#39;, &#39;1889-Harrison.txt&#39;, &#39;1893-Cleveland.txt&#39;, &#39;1897-McKinley.txt&#39;, &#39;1901-McKinley.txt&#39;, &#39;1905-Roosevelt.txt&#39;, &#39;1909-Taft.txt&#39;, &#39;1913-Wilson.txt&#39;, &#39;1917-Wilson.txt&#39;, &#39;1921-Harding.txt&#39;, &#39;1925-Coolidge.txt&#39;, &#39;1929-Hoover.txt&#39;, &#39;1933-Roosevelt.txt&#39;, &#39;1937-Roosevelt.txt&#39;, &#39;1941-Roosevelt.txt&#39;, &#39;1945-Roosevelt.txt&#39;, &#39;1949-Truman.txt&#39;, &#39;1953-Eisenhower.txt&#39;, &#39;1957-Eisenhower.txt&#39;, &#39;1961-Kennedy.txt&#39;, &#39;1965-Johnson.txt&#39;, &#39;1969-Nixon.txt&#39;, &#39;1973-Nixon.txt&#39;, &#39;1977-Carter.txt&#39;, &#39;1981-Reagan.txt&#39;, &#39;1985-Reagan.txt&#39;, &#39;1989-Bush.txt&#39;, &#39;1993-Clinton.txt&#39;, &#39;1997-Clinton.txt&#39;, &#39;2001-Bush.txt&#39;, &#39;2005-Bush.txt&#39;, &#39;2009-Obama.txt&#39;, &#39;2013-Obama.txt&#39;, &#39;2017-Trump.txt&#39;, &#39;2021-Biden.txt&#39;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;1789-Washington.txt&#39;,
+ &#39;1793-Washington.txt&#39;,
+ &#39;1797-Adams.txt&#39;,
+ &#39;1801-Jefferson.txt&#39;,
+ &#39;1805-Jefferson.txt&#39;,
+ &#39;1809-Madison.txt&#39;,
+ &#39;1813-Madison.txt&#39;,
+ &#39;1817-Monroe.txt&#39;,
+ &#39;1821-Monroe.txt&#39;,
+ &#39;1825-Adams.txt&#39;,
+ &#39;1829-Jackson.txt&#39;,
+ &#39;1833-Jackson.txt&#39;,
+ &#39;1837-VanBuren.txt&#39;,
+ &#39;1841-Harrison.txt&#39;,
+ &#39;1845-Polk.txt&#39;,
+ &#39;1849-Taylor.txt&#39;,
+ &#39;1853-Pierce.txt&#39;,
+ &#39;1857-Buchanan.txt&#39;,
+ &#39;1861-Lincoln.txt&#39;,
+ &#39;1865-Lincoln.txt&#39;,
+ &#39;1869-Grant.txt&#39;,
+ &#39;1873-Grant.txt&#39;,
+ &#39;1877-Hayes.txt&#39;,
+ &#39;1881-Garfield.txt&#39;,
+ &#39;1885-Cleveland.txt&#39;,
+ &#39;1889-Harrison.txt&#39;,
+ &#39;1893-Cleveland.txt&#39;,
+ &#39;1897-McKinley.txt&#39;,
+ &#39;1901-McKinley.txt&#39;,
+ &#39;1905-Roosevelt.txt&#39;,
+ &#39;1909-Taft.txt&#39;,
+ &#39;1913-Wilson.txt&#39;,
+ &#39;1917-Wilson.txt&#39;,
+ &#39;1921-Harding.txt&#39;,
+ &#39;1925-Coolidge.txt&#39;,
+ &#39;1929-Hoover.txt&#39;,
+ &#39;1933-Roosevelt.txt&#39;,
+ &#39;1937-Roosevelt.txt&#39;,
+ &#39;1941-Roosevelt.txt&#39;,
+ &#39;1945-Roosevelt.txt&#39;,
+ &#39;1949-Truman.txt&#39;,
+ &#39;1953-Eisenhower.txt&#39;,
+ &#39;1957-Eisenhower.txt&#39;,
+ &#39;1961-Kennedy.txt&#39;,
+ &#39;1965-Johnson.txt&#39;,
+ &#39;1969-Nixon.txt&#39;,
+ &#39;1973-Nixon.txt&#39;,
+ &#39;1977-Carter.txt&#39;,
+ &#39;1981-Reagan.txt&#39;,
+ &#39;1985-Reagan.txt&#39;,
+ &#39;1989-Bush.txt&#39;,
+ &#39;1993-Clinton.txt&#39;,
+ &#39;1997-Clinton.txt&#39;,
+ &#39;2001-Bush.txt&#39;,
+ &#39;2005-Bush.txt&#39;,
+ &#39;2009-Obama.txt&#39;,
+ &#39;2013-Obama.txt&#39;,
+ &#39;2017-Trump.txt&#39;,
+ &#39;2021-Biden.txt&#39;]
 </pre></div>
 </div>
 </div>
@@ -603,14 +680,72 @@ Tips: 注意，每个文本的年份都出现在其文件名中。使用fileid[:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;1789&#39;, &#39;1793&#39;, &#39;1797&#39;, &#39;1801&#39;, &#39;1805&#39;, &#39;1809&#39;, &#39;1813&#39;, &#39;1817&#39;, &#39;1821&#39;, &#39;1825&#39;, &#39;1829&#39;, &#39;1833&#39;, &#39;1837&#39;, &#39;1841&#39;, &#39;1845&#39;, &#39;1849&#39;, &#39;1853&#39;, &#39;1857&#39;, &#39;1861&#39;, &#39;1865&#39;, &#39;1869&#39;, &#39;1873&#39;, &#39;1877&#39;, &#39;1881&#39;, &#39;1885&#39;, &#39;1889&#39;, &#39;1893&#39;, &#39;1897&#39;, &#39;1901&#39;, &#39;1905&#39;, &#39;1909&#39;, &#39;1913&#39;, &#39;1917&#39;, &#39;1921&#39;, &#39;1925&#39;, &#39;1929&#39;, &#39;1933&#39;, &#39;1937&#39;, &#39;1941&#39;, &#39;1945&#39;, &#39;1949&#39;, &#39;1953&#39;, &#39;1957&#39;, &#39;1961&#39;, &#39;1965&#39;, &#39;1969&#39;, &#39;1973&#39;, &#39;1977&#39;, &#39;1981&#39;, &#39;1985&#39;, &#39;1989&#39;, &#39;1993&#39;, &#39;1997&#39;, &#39;2001&#39;, &#39;2005&#39;, &#39;2009&#39;, &#39;2013&#39;, &#39;2017&#39;, &#39;2021&#39;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;1789&#39;,
+ &#39;1793&#39;,
+ &#39;1797&#39;,
+ &#39;1801&#39;,
+ &#39;1805&#39;,
+ &#39;1809&#39;,
+ &#39;1813&#39;,
+ &#39;1817&#39;,
+ &#39;1821&#39;,
+ &#39;1825&#39;,
+ &#39;1829&#39;,
+ &#39;1833&#39;,
+ &#39;1837&#39;,
+ &#39;1841&#39;,
+ &#39;1845&#39;,
+ &#39;1849&#39;,
+ &#39;1853&#39;,
+ &#39;1857&#39;,
+ &#39;1861&#39;,
+ &#39;1865&#39;,
+ &#39;1869&#39;,
+ &#39;1873&#39;,
+ &#39;1877&#39;,
+ &#39;1881&#39;,
+ &#39;1885&#39;,
+ &#39;1889&#39;,
+ &#39;1893&#39;,
+ &#39;1897&#39;,
+ &#39;1901&#39;,
+ &#39;1905&#39;,
+ &#39;1909&#39;,
+ &#39;1913&#39;,
+ &#39;1917&#39;,
+ &#39;1921&#39;,
+ &#39;1925&#39;,
+ &#39;1929&#39;,
+ &#39;1933&#39;,
+ &#39;1937&#39;,
+ &#39;1941&#39;,
+ &#39;1945&#39;,
+ &#39;1949&#39;,
+ &#39;1953&#39;,
+ &#39;1957&#39;,
+ &#39;1961&#39;,
+ &#39;1965&#39;,
+ &#39;1969&#39;,
+ &#39;1973&#39;,
+ &#39;1977&#39;,
+ &#39;1981&#39;,
+ &#39;1985&#39;,
+ &#39;1989&#39;,
+ &#39;1993&#39;,
+ &#39;1997&#39;,
+ &#39;2001&#39;,
+ &#39;2005&#39;,
+ &#39;2009&#39;,
+ &#39;2013&#39;,
+ &#39;2017&#39;,
+ &#39;2021&#39;]
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.sans-serif&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Hei&#39;</span>  <span class="c1"># 设置字体为SimHei</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.sans-serif&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Songti SC&#39;</span>  <span class="c1"># 设置字体为中文字体</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.unicode_minus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># 解决负号“-”显示异常</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -627,7 +762,7 @@ Tips: 注意，每个文本的年份都出现在其文件名中。使用fileid[:
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../../_images/ac664a995a274942ca5d6b0a5e525fddccfe41094c64646a53d63fb237285664.svg"><img alt="../../_images/ac664a995a274942ca5d6b0a5e525fddccfe41094c64646a53d63fb237285664.svg" height="420" src="../../_images/ac664a995a274942ca5d6b0a5e525fddccfe41094c64646a53d63fb237285664.svg" width="420" /></a>
+<a class="reference internal image-reference" href="../../_images/a4316e8c82885b0260f6cdc14ec1342127d9ce6ca463b953e502da3f5dc529d3.svg"><img alt="../../_images/a4316e8c82885b0260f6cdc14ec1342127d9ce6ca463b953e502da3f5dc529d3.svg" height="420" src="../../_images/a4316e8c82885b0260f6cdc14ec1342127d9ce6ca463b953e502da3f5dc529d3.svg" width="420" /></a>
 </div>
 </div>
 </section>
