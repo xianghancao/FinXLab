@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b76e3c8a" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -55,7 +55,7 @@
     <script src="../../_static/jquery.js?v=5d32c60e"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
@@ -79,7 +79,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'FinancialEconomics/230501-DCC-GARCH的R语言实现/article';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Networks" href="../../Networks/%E7%9B%AE%E5%BD%95.html" />
+    <link rel="next" title="GARCH模型的实现" href="../221201-GARCH%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/article.html" />
     <link rel="prev" title="Diebold&amp;Yilmaz method" href="../230501-DY%20method/article.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -201,6 +201,7 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../NLP/%E7%9B%AE%E5%BD%95.html">NLP</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../NLP/230401-%E7%BE%8E%E5%9B%BD%E6%80%BB%E7%BB%9F%E5%B0%B1%E8%81%8C%E6%BC%94%E8%AF%B4/article.html">使用NLTK分析美国总统就职演说中提及“战争”的次数</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../NLP/241128-%E9%A2%84%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B%E8%BF%9B%E8%A1%8C%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB/article.html">使用 DistilBERT 进行情感分析：基于预训练模型的实战</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../NLP/241130-%E6%96%87%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%9F%A2%E9%87%8F%E5%8C%96%E4%B8%8EKeras%E4%B8%AD%E7%9A%84Tokenizer%E4%BD%BF%E7%94%A8/article.html">文本数据矢量化与Keras中的Tokenizer使用</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../NLP/241224-Word-metric%20method%20VS%20Semantic%20measure/article.html">Word-metric methods VS Semantic Models</a></li>
@@ -212,6 +213,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../240717-%E5%87%A0%E7%A7%8D%E6%B3%A2%E5%8A%A8%E7%8E%87%E7%9A%84%E8%AE%A1%E7%AE%97/article.html">几种波动率的计算</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../230501-DY%20method/article.html">Diebold&amp;Yilmaz method</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">DCC-GARCH的R语言实现</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../221201-GARCH%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/article.html">GARCH模型的实现</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../Networks/%E7%9B%AE%E5%BD%95.html">Networks</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -559,7 +561,7 @@ $<span class="math notranslate nohighlight">\(
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/7ed2241444af80dafe1ef5e5bfd022934d8aa4aa27cbcc0fd9fd64868f190a83.png" src="../../_images/7ed2241444af80dafe1ef5e5bfd022934d8aa4aa27cbcc0fd9fd64868f190a83.png" />
+<a class="reference internal image-reference" href="../../_images/7ed2241444af80dafe1ef5e5bfd022934d8aa4aa27cbcc0fd9fd64868f190a83.png"><img alt="../../_images/7ed2241444af80dafe1ef5e5bfd022934d8aa4aa27cbcc0fd9fd64868f190a83.png" src="../../_images/7ed2241444af80dafe1ef5e5bfd022934d8aa4aa27cbcc0fd9fd64868f190a83.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 </section>
@@ -653,7 +655,7 @@ t-values:   5.421885 1.782122 7.006998
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/9a7607505b497824e8ad7ee146b63d1329f48933be44d6769f8ad97288849e45.png" src="../../_images/9a7607505b497824e8ad7ee146b63d1329f48933be44d6769f8ad97288849e45.png" />
+<a class="reference internal image-reference" href="../../_images/9a7607505b497824e8ad7ee146b63d1329f48933be44d6769f8ad97288849e45.png"><img alt="../../_images/9a7607505b497824e8ad7ee146b63d1329f48933be44d6769f8ad97288849e45.png" src="../../_images/9a7607505b497824e8ad7ee146b63d1329f48933be44d6769f8ad97288849e45.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 </section>
@@ -705,7 +707,7 @@ Test and p-value:  111.3537 0.06306805
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/4305112db47481177a015c6ac621e446de42c5b3f08beebee353c77b6896b097.png" src="../../_images/4305112db47481177a015c6ac621e446de42c5b3f08beebee353c77b6896b097.png" />
+<a class="reference internal image-reference" href="../../_images/4305112db47481177a015c6ac621e446de42c5b3f08beebee353c77b6896b097.png"><img alt="../../_images/4305112db47481177a015c6ac621e446de42c5b3f08beebee353c77b6896b097.png" src="../../_images/4305112db47481177a015c6ac621e446de42c5b3f08beebee353c77b6896b097.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -808,11 +810,11 @@ t-values:   30.95947 3.556835 6.471295
       </div>
     </a>
     <a class="right-next"
-       href="../../Networks/%E7%9B%AE%E5%BD%95.html"
+       href="../221201-GARCH%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/article.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Networks</p>
+        <p class="prev-next-title">GARCH模型的实现</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

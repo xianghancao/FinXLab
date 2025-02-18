@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b76e3c8a" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -55,7 +55,7 @@
     <script src="../../_static/jquery.js?v=5d32c60e"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
@@ -201,6 +201,7 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../NLP/%E7%9B%AE%E5%BD%95.html">NLP</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../NLP/230401-%E7%BE%8E%E5%9B%BD%E6%80%BB%E7%BB%9F%E5%B0%B1%E8%81%8C%E6%BC%94%E8%AF%B4/article.html">使用NLTK分析美国总统就职演说中提及“战争”的次数</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../NLP/241128-%E9%A2%84%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B%E8%BF%9B%E8%A1%8C%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB/article.html">使用 DistilBERT 进行情感分析：基于预训练模型的实战</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../NLP/241130-%E6%96%87%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%9F%A2%E9%87%8F%E5%8C%96%E4%B8%8EKeras%E4%B8%AD%E7%9A%84Tokenizer%E4%BD%BF%E7%94%A8/article.html">文本数据矢量化与Keras中的Tokenizer使用</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../NLP/241224-Word-metric%20method%20VS%20Semantic%20measure/article.html">Word-metric methods VS Semantic Models</a></li>
@@ -212,6 +213,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../FinancialEconomics/240717-%E5%87%A0%E7%A7%8D%E6%B3%A2%E5%8A%A8%E7%8E%87%E7%9A%84%E8%AE%A1%E7%AE%97/article.html">几种波动率的计算</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../FinancialEconomics/230501-DY%20method/article.html">Diebold&amp;Yilmaz method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../FinancialEconomics/230501-DCC-GARCH%E7%9A%84R%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0/article.html">DCC-GARCH的R语言实现</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../FinancialEconomics/221201-GARCH%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/article.html">GARCH模型的实现</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../%E7%9B%AE%E5%BD%95.html">Networks</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
@@ -509,7 +511,8 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/957b5467b36ccdd3cdea077c36cb11d5d7e1fd658e385dd6d2308edfd0cbf57e.svg" src="../../_images/957b5467b36ccdd3cdea077c36cb11d5d7e1fd658e385dd6d2308edfd0cbf57e.svg" /></div>
+<a class="reference internal image-reference" href="../../_images/957b5467b36ccdd3cdea077c36cb11d5d7e1fd658e385dd6d2308edfd0cbf57e.svg"><img alt="../../_images/957b5467b36ccdd3cdea077c36cb11d5d7e1fd658e385dd6d2308edfd0cbf57e.svg" height="420" src="../../_images/957b5467b36ccdd3cdea077c36cb11d5d7e1fd658e385dd6d2308edfd0cbf57e.svg" width="420" /></a>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -518,7 +521,8 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/640dbf0c7123a220abac6de365881a723fd1e8723b2a13b28167658447729752.svg" src="../../_images/640dbf0c7123a220abac6de365881a723fd1e8723b2a13b28167658447729752.svg" /></div>
+<a class="reference internal image-reference" href="../../_images/640dbf0c7123a220abac6de365881a723fd1e8723b2a13b28167658447729752.svg"><img alt="../../_images/640dbf0c7123a220abac6de365881a723fd1e8723b2a13b28167658447729752.svg" height="420" src="../../_images/640dbf0c7123a220abac6de365881a723fd1e8723b2a13b28167658447729752.svg" width="420" /></a>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
